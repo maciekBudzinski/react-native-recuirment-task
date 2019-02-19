@@ -1,10 +1,106 @@
-import React from 'react';
-import { View, Text } from 'native-base';
+import React, { Component } from 'react';
+import { View, Text, Container } from 'native-base';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import ActionButton from '../components/shoppingLists/AddButton';
+import ListForm from '../components/shoppingLists/ListForm';
+import { addList, editList, deleteList } from '../modules/shoppingList/actions';
+import ShoppingListsList from '../components/common/ShoppingListsList';
 
-const ShoppingListsScreen = () => (
-  <View>
-    <Text>ShoppingListsScreen</Text>
-  </View>
-);
+class ShoppingListsScreen extends Component {
+  state = {
+    isListFormVisible: false,
+    editingListId: -1,
+    isListEditing: false,
+    formInputs: {
+      name: '',
+    },
+  };
 
-export default ShoppingListsScreen;
+  onActionButtonPress = () => {
+    this.setState({
+      isListFormVisible: true,
+    });
+  };
+
+  onRequestListFormModalClose = () => {
+    this.setState({
+      isListFormVisible: false,
+    });
+  };
+
+  onTextInputChange = (inputName, text) => {
+    this.setState(prevState => ({
+      formInputs: {
+        ...prevState.formInputs,
+        [inputName]: text,
+      },
+    }));
+  };
+
+  onAddListButtonPress = () => {
+    const { addList, editList } = this.props;
+    const {
+      isListEditing,
+      editingListId,
+      formInputs: { name },
+    } = this.state;
+
+    if (isListEditing) {
+      editList(editingListId, name, '#00f');
+    } else {
+      addList(name, '#00f');
+    }
+  };
+
+  onEditListButtonPress = (id, name, color) => {
+    this.setState({
+      isListFormVisible: true,
+      isListEditing: true,
+      editingListId: id,
+      formInputs: {
+        name,
+      },
+    });
+  };
+
+  onDeleteListButtonPress = id => {
+    const { deleteList } = this.props;
+    deleteList(id);
+  };
+
+  render() {
+    const { lists } = this.props;
+    const { isListFormVisible, isListEditing, formInputs } = this.state;
+    return (
+      <Container>
+        <View>
+          <Text>ShoppingListsScreen</Text>
+        </View>
+
+        <ShoppingListsList data={lists} onEditButtonPress={this.onEditListButtonPress} onDeleteButtonPress={this.onDeleteListButtonPress} />
+
+        <ListForm
+          isVisible={isListFormVisible}
+          isEditing={isListEditing}
+          formInputs={formInputs}
+          onRequestClose={this.onRequestListFormModalClose}
+          onTextInputChange={this.onTextInputChange}
+          onAddButtonPress={this.onAddListButtonPress}
+        />
+        <ActionButton onPress={this.onActionButtonPress} />
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  lists: state.shoppingList.lists,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShoppingListsScreen);

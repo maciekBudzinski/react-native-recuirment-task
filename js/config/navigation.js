@@ -4,14 +4,21 @@ import ArchivedListsScreen from '../screens/ArchivedLists';
 import ShoppingListDetailsScreen from '../screens/ShoppingListDetails';
 import SettingsScreen from '../screens/Settings';
 
-const StackNavigator = createStackNavigator({
-  Lists: {
-    screen: ShoppingListsScreen,
+const StackNavigator = createStackNavigator(
+  {
+    Lists: {
+      screen: ShoppingListsScreen,
+    },
+    Details: {
+      screen: ShoppingListDetailsScreen,
+    },
   },
-  Details: {
-    screen: ShoppingListDetailsScreen,
-  },
-});
+  {
+    navigationOptions: {
+      header: null,
+    },
+  }
+);
 
 const RootNavigator = createBottomTabNavigator({
   Lists: {

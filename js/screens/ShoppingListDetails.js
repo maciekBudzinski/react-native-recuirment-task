@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Container, Button } from 'native-base';
+import { View, Text, Container, Button, Left, Icon, Title, Body, Right, Subtitle } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ActionButton from '../components/shoppingLists/AddButton';
@@ -8,18 +8,24 @@ import { addList, editList, deleteList, openList, addProduct, deleteProduct, tog
 import ShoppingListsList from '../components/common/ShoppingListsList';
 import ProductList from '../components/shoppingListDetails/ProductList';
 import ProductForm from '../components/shoppingListDetails/ProductForm';
+import Header from '../components/shoppingListDetails/Header';
 
 class ShoppingListsScreen extends Component {
-  state = {
-    isListFormVisible: false,
-    editingListId: -1,
-    isListEditing: false,
-    formInputs: {
-      name: '',
-      amount: '',
-      unit: '',
-    },
-  };
+  constructor() {
+    super();
+    this.state = {
+      isListFormVisible: false,
+      editingListId: -1,
+      isListEditing: false,
+      formInputs: {
+        name: '',
+        amount: '',
+        unit: '',
+      },
+    };
+
+    this.productsListRef = React.createRef();
+  }
 
   clearInputs = () => {
     this.setState({
@@ -64,6 +70,7 @@ class ShoppingListsScreen extends Component {
 
     addProduct(name, amount, unit);
     this.clearInputs();
+    this.productsListRef.current.scrollToEnd({ animated: true });
   };
 
   onCancelButtonPress = () => {
@@ -76,21 +83,23 @@ class ShoppingListsScreen extends Component {
   };
 
   onProductToggle = id => {
-    console.log('toogle');
     const { toggleProduct } = this.props;
     toggleProduct(id);
   };
 
+  onBackButtonPress = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
+  };
+
   render() {
     const { lists, currentOpenListIndex } = this.props;
-    const currentOpenList = lists[currentOpenListIndex];
+    const { name, products } = lists[currentOpenListIndex];
     const { isListFormVisible, isListEditing, formInputs } = this.state;
     return (
       <Container>
-        <View>
-          <Text>Shopping Details Screen {currentOpenList.name}</Text>
-        </View>
-        <ProductList data={currentOpenList.products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
+        <Header title={name} onBackButtonPress={this.onBackButtonPress} />
+        <ProductList listRef={this.productsListRef} data={products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
         <ProductForm
           formInputs={formInputs}
           clearInputs={this.clearInputs}

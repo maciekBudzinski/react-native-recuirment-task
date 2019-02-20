@@ -6,17 +6,22 @@ import SettingsScreen from '../screens/Settings';
 
 const StackNavigator = createStackNavigator(
   {
-    Lists: {
-      screen: ShoppingListsScreen,
-    },
     Details: {
       screen: ShoppingListDetailsScreen,
+      navigationOptions: {
+        header: null,
+      },
+      Lists: {
+        screen: ShoppingListsScreen,
+        navigationOptions: {
+          header: null,
+        },
+      },
     },
   },
   {
     navigationOptions: ({ navigation }) => ({
       initialRouteName: 'Details',
-      header: null,
       tabBarVisible: navigation.state.index !== 1,
     }),
   }

@@ -15,7 +15,6 @@ class ProductForm extends Component {
   };
 
   render() {
-    console.log(this.amountInputRef);
     const { formInputs, onTextInputChange, onSavePress, onCancelPress, clearInputs } = this.props;
     return (
       <Form>

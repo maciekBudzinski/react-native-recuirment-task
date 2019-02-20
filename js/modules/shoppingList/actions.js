@@ -37,7 +37,12 @@ export const editProduct = (listId, id, name, amount, unit) => ({
   payload: { listId, id, name, amount, unit },
 });
 
-export const deleteProduct = (listId, id) => ({
+export const deleteProduct = id => ({
   type: listActions.DELETE_PRODUCT,
+  payload: { id },
+});
+
+export const toggleProduct = id => ({
+  type: listActions.TOGGLE_PRODUCT,
   payload: { id },
 });

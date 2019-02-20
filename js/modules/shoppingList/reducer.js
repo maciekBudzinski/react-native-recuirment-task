@@ -63,8 +63,24 @@ export default (state = initialState, action) => {
     }
 
     case listActions.DELETE_PRODUCT: {
+      const { id: deletingId } = action.payload;
       return {
         ...state,
+        lists: lists.map((list, index) =>
+          index === currentOpenListIndex ? { ...list, products: list.products.filter(({ id }) => id !== deletingId) } : list
+        ),
+      };
+    }
+
+    case listActions.TOGGLE_PRODUCT: {
+      const { id } = action.payload;
+      return {
+        ...state,
+        lists: lists.map((list, index) =>
+          index === currentOpenListIndex
+            ? { ...list, products: list.products.map(product => (product.id === id ? { ...product, checked: !product.checked } : product)) }
+            : list
+        ),
       };
     }
 

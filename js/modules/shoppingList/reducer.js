@@ -2,6 +2,7 @@ import * as listActions from './actionTypes';
 
 const initialState = {
   lists: [],
+  currentOpenList: {},
 };
 
 export default (state = initialState, action) => {
@@ -34,6 +35,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         lists: lists.filter(({ id }) => id !== deletingId),
+      };
+    }
+
+    case listActions.OPEN: {
+      const { id: openingId } = action.payload;
+      return {
+        ...state,
+        currentOpenList: lists.find(({ id }) => id === openingId),
       };
     }
 

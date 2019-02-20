@@ -21,3 +21,8 @@ export const deleteList = id => ({
   type: listActions.DELETE,
   payload: { id },
 });
+
+export const openList = id => ({
+  type: listActions.OPEN,
+  payload: { id },
+});

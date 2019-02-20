@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ActionButton from '../components/shoppingLists/AddButton';
 import ListForm from '../components/shoppingLists/ListForm';
-import { addList, editList, deleteList } from '../modules/shoppingList/actions';
+import { addList, editList, deleteList, openList } from '../modules/shoppingList/actions';
 import ShoppingListsList from '../components/common/ShoppingListsList';
 
 class ShoppingListsScreen extends Component {
@@ -64,6 +64,13 @@ class ShoppingListsScreen extends Component {
     });
   };
 
+  onListPress = id => {
+    const { navigation, openList } = this.props;
+    console.log('Pressed');
+    openList(id);
+    navigation.navigate('Details');
+  };
+
   onDeleteListButtonPress = id => {
     const { deleteList } = this.props;
     deleteList(id);
@@ -78,7 +85,12 @@ class ShoppingListsScreen extends Component {
           <Text>ShoppingListsScreen</Text>
         </View>
 
-        <ShoppingListsList data={lists} onEditButtonPress={this.onEditListButtonPress} onDeleteButtonPress={this.onDeleteListButtonPress} />
+        <ShoppingListsList
+          data={lists}
+          onEditButtonPress={this.onEditListButtonPress}
+          onDeleteButtonPress={this.onDeleteListButtonPress}
+          onPress={this.onListPress}
+        />
 
         <ListForm
           isVisible={isListFormVisible}
@@ -98,7 +110,7 @@ const mapStateToProps = state => ({
   lists: state.shoppingList.lists,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList, openList }, dispatch);
 
 export default connect(
   mapStateToProps,

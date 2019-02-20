@@ -15,9 +15,10 @@ const StackNavigator = createStackNavigator(
   },
   {
     // initialRouteName: 'Details',
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       header: null,
-    },
+      tabBarVisible: navigation.state.index !== 1,
+    }),
   }
 );
 

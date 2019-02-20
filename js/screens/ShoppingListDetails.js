@@ -6,6 +6,8 @@ import ActionButton from '../components/shoppingLists/AddButton';
 import ListForm from '../components/shoppingLists/ListForm';
 import { addList, editList, deleteList, openList, addProduct } from '../modules/shoppingList/actions';
 import ShoppingListsList from '../components/common/ShoppingListsList';
+import ProductList from '../components/shoppingListDetails/ProductList';
+import ProductForm from '../components/shoppingListDetails/ProductForm';
 
 class ShoppingListsScreen extends Component {
   state = {
@@ -14,20 +16,31 @@ class ShoppingListsScreen extends Component {
     isListEditing: false,
     formInputs: {
       name: '',
+      amount: '',
+      unit: '',
     },
   };
 
-  onActionButtonPress = () => {
+  clearInputs = () => {
     this.setState({
-      isListFormVisible: true,
+      formInputs: {
+        name: '',
+        amount: '',
+        unit: '',
+      },
     });
   };
+  // onActionButtonPress = () => {
+  //   this.setState({
+  //     isListFormVisible: true,
+  //   });
+  // };
 
-  onRequestListFormModalClose = () => {
-    this.setState({
-      isListFormVisible: false,
-    });
-  };
+  // onRequestListFormModalClose = () => {
+  //   this.setState({
+  //     isListFormVisible: false,
+  //   });
+  // };
 
   onTextInputChange = (inputName, text) => {
     this.setState(prevState => ({
@@ -38,9 +51,23 @@ class ShoppingListsScreen extends Component {
     }));
   };
 
-  onAddProductPress = () => {
-    const { addProduct, currentOpenList } = this.props;
-    addProduct('produkt', 2, 'cm');
+  // onAddProductPress = () => {
+  //   const { addProduct, currentOpenList } = this.props;
+  //   addProduct('produkt', 2, 'cm');
+  // };
+
+  onSaveButtonPress = () => {
+    const { addProduct } = this.props;
+    const {
+      formInputs: { name, amount, unit },
+    } = this.state;
+
+    addProduct(name, amount, unit);
+    this.clearInputs();
+  };
+
+  onCancelButtonPress = () => {
+    this.clearInputs();
   };
 
   render() {
@@ -50,11 +77,16 @@ class ShoppingListsScreen extends Component {
     return (
       <Container>
         <View>
-          <Text>Shopping Details Screen {currentOpenListIndex.name}</Text>
+          <Text>Shopping Details Screen {currentOpenList.name}</Text>
         </View>
-        <Button onPress={this.onAddProductPress}>
-          <Text>Add products</Text>
-        </Button>
+        <ProductList data={currentOpenList.products} />
+        <ProductForm
+          formInputs={formInputs}
+          clearInputs={this.clearInputs}
+          onTextInputChange={this.onTextInputChange}
+          onSavePress={this.onSaveButtonPress}
+          onCancelPress={this.onCancelButtonPress}
+        />
       </Container>
     );
   }

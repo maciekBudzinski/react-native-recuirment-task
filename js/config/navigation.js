@@ -14,6 +14,7 @@ const StackNavigator = createStackNavigator(
     },
   },
   {
+    // initialRouteName: 'Details',
     navigationOptions: {
       header: null,
     },

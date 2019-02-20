@@ -2,11 +2,11 @@ import * as listActions from './actionTypes';
 
 const initialState = {
   lists: [],
-  currentOpenList: {},
+  currentOpenListIndex: null,
 };
 
 export default (state = initialState, action) => {
-  const { lists } = state;
+  const { lists, currentOpenListIndex } = state;
   switch (action.type) {
     case listActions.ADD: {
       const { name, color } = action.payload;
@@ -19,6 +19,7 @@ export default (state = initialState, action) => {
             lastEditedTime: new Date(),
             name,
             color,
+            products: [],
           },
         ],
       };
@@ -42,7 +43,28 @@ export default (state = initialState, action) => {
       const { id: openingId } = action.payload;
       return {
         ...state,
-        currentOpenList: lists.find(({ id }) => id === openingId),
+        currentOpenListIndex: lists.findIndex(({ id }) => id === openingId),
+      };
+    }
+
+    case listActions.ADD_PRODUCT: {
+      const { name, amount, unit } = action.payload;
+      const newProduct = { id: Date.now(), name, amount, unit, checked: false };
+      return {
+        ...state,
+        lists: lists.map((list, index) => (index === currentOpenListIndex ? { ...list, products: [...list.products, { ...newProduct }] } : list)),
+      };
+    }
+
+    case listActions.EDIT_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+
+    case listActions.DELETE_PRODUCT: {
+      return {
+        ...state,
       };
     }
 

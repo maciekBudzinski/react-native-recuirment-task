@@ -26,3 +26,18 @@ export const openList = id => ({
   type: listActions.OPEN,
   payload: { id },
 });
+
+export const addProduct = (name, amount, unit) => ({
+  type: listActions.ADD_PRODUCT,
+  payload: { name, amount, unit },
+});
+
+export const editProduct = (listId, id, name, amount, unit) => ({
+  type: listActions.EDIT_PRODUCT,
+  payload: { listId, id, name, amount, unit },
+});
+
+export const deleteProduct = (listId, id) => ({
+  type: listActions.DELETE_PRODUCT,
+  payload: { id },
+});

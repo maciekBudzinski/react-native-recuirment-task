@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ActionButton from '../components/shoppingLists/AddButton';
 import ListForm from '../components/shoppingLists/ListForm';
-import { addList, editList, deleteList, openList } from '../modules/shoppingList/actions';
+import { addList, editList, deleteList, openList, addProduct } from '../modules/shoppingList/actions';
 import ShoppingListsList from '../components/common/ShoppingListsList';
 
 class ShoppingListsScreen extends Component {
@@ -51,6 +51,13 @@ class ShoppingListsScreen extends Component {
     } else {
       addList(name, '#00f');
     }
+
+    this.setState({
+      isListFormVisible: false,
+      formInputs: {
+        name: '',
+      },
+    });
   };
 
   onEditListButtonPress = (id, name, color) => {
@@ -64,9 +71,13 @@ class ShoppingListsScreen extends Component {
     });
   };
 
+  onAddProductPress = (listId, name, amount, unit) => {
+    const { addProduct } = this.props;
+    addProduct(listId, name, amount, unit);
+  };
+
   onListPress = id => {
     const { navigation, openList } = this.props;
-    console.log('Pressed');
     openList(id);
     navigation.navigate('Details');
   };
@@ -85,13 +96,14 @@ class ShoppingListsScreen extends Component {
           <Text>ShoppingListsScreen</Text>
         </View>
 
-        <ShoppingListsList
-          data={lists}
-          onEditButtonPress={this.onEditListButtonPress}
-          onDeleteButtonPress={this.onDeleteListButtonPress}
-          onPress={this.onListPress}
-        />
-
+        {lists.length > 0 && (
+          <ShoppingListsList
+            data={lists}
+            onEditButtonPress={this.onEditListButtonPress}
+            onDeleteButtonPress={this.onDeleteListButtonPress}
+            onPress={this.onListPress}
+          />
+        )}
         <ListForm
           isVisible={isListFormVisible}
           isEditing={isListEditing}
@@ -110,7 +122,7 @@ const mapStateToProps = state => ({
   lists: state.shoppingList.lists,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList, openList }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList, openList, addProduct }, dispatch);
 
 export default connect(
   mapStateToProps,

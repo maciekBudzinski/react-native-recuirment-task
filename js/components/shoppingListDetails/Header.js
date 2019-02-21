@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Right, Body, Left, Title, Subtitle } from 'native-base';
 import HeaderLayout from '../common/Header';
 
-const Header = ({ title, onBackButtonPress }) => (
+const Header = ({ id, isActive, title, onBackButtonPress, onToggleListActive }) => (
   <HeaderLayout>
     <Left>
       <Button transparent onPress={onBackButtonPress}>
@@ -15,8 +15,8 @@ const Header = ({ title, onBackButtonPress }) => (
       <Subtitle>subtitle</Subtitle>
     </Body>
     <Right>
-      <Button transparent>
-        <Icon name="lock" />
+      <Button transparent onPress={onToggleListActive}>
+        <Icon name={isActive ? 'lock' : 'unlock'} />
       </Button>
     </Right>
   </HeaderLayout>

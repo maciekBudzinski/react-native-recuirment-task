@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Container } from 'native-base';
+import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import filter from 'lodash.filter';
 import ActionButton from '../components/shoppingLists/AddButton';
 import ListForm from '../components/shoppingLists/ListForm';
 import { addList, editList, deleteList, openList, addProduct } from '../modules/shoppingList/actions';
@@ -10,12 +11,10 @@ import ShoppingListsList from '../components/common/ShoppingListsList';
 import Header from '../components/shoppingLists/Header';
 import { LIST_COLORS } from '../style/colors';
 
-const randomColorIndex = Math.floor(Math.random() * LIST_COLORS.length);
-
 class ShoppingListsScreen extends Component {
   state = {
     isListFormVisible: false,
-    editingListId: -1,
+    editingListId: null,
     isListEditing: false,
     formInputs: {
       name: '',
@@ -151,10 +150,16 @@ class ShoppingListsScreen extends Component {
 
 ShoppingListsScreen.propTypes = {
   lists: PropTypes.instanceOf(Object).isRequired,
+  addList: PropTypes.func.isRequired,
+  editList: PropTypes.func.isRequired,
+  deleteList: PropTypes.func.isRequired,
+  addProduct: PropTypes.func.isRequired,
+  openList: PropTypes.func.isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = state => ({
-  lists: state.shoppingList.lists,
+  lists: filter(state.shoppingList.lists, ({ isActive }) => isActive === true),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList, openList, addProduct }, dispatch);

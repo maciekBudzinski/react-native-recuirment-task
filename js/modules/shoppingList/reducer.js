@@ -56,6 +56,15 @@ export default (state = initialState, action) => {
       };
     }
 
+    case listActions.TOGGLE_ACTIVE: {
+      listsCopy[currentOpenListId] = { ...lists[currentOpenListId], isActive: !lists[currentOpenListId].isActive };
+
+      return {
+        ...state,
+        lists: listsCopy,
+      };
+    }
+
     case listActions.ADD_PRODUCT: {
       const { name, amount, unit } = action.payload;
       const newProduct = { id: Date.now(), name, lastEditedTime: Date.now(), amount, unit, checked: false };

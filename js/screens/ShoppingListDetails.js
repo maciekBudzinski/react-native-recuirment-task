@@ -3,10 +3,12 @@ import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { addProduct, deleteProduct, toggleProduct } from '../modules/shoppingList/actions';
+import { addProduct, deleteProduct, toggleListActive, toggleProduct } from '../modules/shoppingList/actions';
 import ProductList from '../components/shoppingListDetails/ProductList';
 import ProductForm from '../components/shoppingListDetails/ProductForm';
 import Header from '../components/shoppingListDetails/Header';
+import ArchiveListInfo from '../components/shoppingListDetails/ArchiveListInfo';
+import { showToast } from '../services/Toasts';
 
 class ShoppingListsScreen extends Component {
   constructor() {
@@ -57,13 +59,21 @@ class ShoppingListsScreen extends Component {
   };
 
   onDeleteButtonPress = id => {
-    const { deleteProduct } = this.props;
-    deleteProduct(id);
+    const { deleteProduct, lists, currentOpenListId } = this.props;
+    if (lists[currentOpenListId].isActive) {
+      deleteProduct(id);
+    } else {
+      showToast('List is archived!', 'warning');
+    }
   };
 
   onProductToggle = id => {
-    const { toggleProduct } = this.props;
-    toggleProduct(id);
+    const { toggleProduct, lists, currentOpenListId } = this.props;
+    if (lists[currentOpenListId].isActive) {
+      toggleProduct(id);
+    } else {
+      showToast('List is archived!', 'warning');
+    }
   };
 
   onBackButtonPress = () => {
@@ -71,21 +81,30 @@ class ShoppingListsScreen extends Component {
     navigation.goBack();
   };
 
+  onToggleListActive = () => {
+    const { toggleListActive } = this.props;
+    toggleListActive();
+  };
+
   render() {
     const { lists, currentOpenListId } = this.props;
     const { formInputs } = this.state;
-    const { name, products } = lists[currentOpenListId];
+    const { id, isActive, name, products } = lists[currentOpenListId];
     return (
       <Container>
-        <Header title={name} onBackButtonPress={this.onBackButtonPress} />
+        <Header id={id} isActive={isActive} title={name} onBackButtonPress={this.onBackButtonPress} onToggleListActive={this.onToggleListActive} />
         <ProductList listRef={this.productsListRef} data={products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
-        <ProductForm
-          formInputs={formInputs}
-          clearInputs={this.clearInputs}
-          onTextInputChange={this.onTextInputChange}
-          onSavePress={this.onSaveButtonPress}
-          onCancelPress={this.onCancelButtonPress}
-        />
+        {isActive ? (
+          <ProductForm
+            formInputs={formInputs}
+            clearInputs={this.clearInputs}
+            onTextInputChange={this.onTextInputChange}
+            onSavePress={this.onSaveButtonPress}
+            onCancelPress={this.onCancelButtonPress}
+          />
+        ) : (
+          <ArchiveListInfo />
+        )}
       </Container>
     );
   }
@@ -98,6 +117,7 @@ ShoppingListsScreen.propTypes = {
   addProduct: PropTypes.func.isRequired,
   toggleProduct: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
+  toggleListActive: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -105,7 +125,7 @@ const mapStateToProps = state => ({
   currentOpenListId: state.shoppingList.currentOpenListId,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addProduct, deleteProduct, toggleProduct }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addProduct, deleteProduct, toggleProduct, toggleListActive }, dispatch);
 
 export default connect(
   mapStateToProps,

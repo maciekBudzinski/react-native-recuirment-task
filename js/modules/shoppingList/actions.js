@@ -24,6 +24,10 @@ export const deleteList = id => ({
   payload: { id },
 });
 
+export const toggleListActive = () => ({
+  type: listActions.TOGGLE_ACTIVE,
+});
+
 export const openList = id => ({
   type: listActions.OPEN,
   payload: { id },

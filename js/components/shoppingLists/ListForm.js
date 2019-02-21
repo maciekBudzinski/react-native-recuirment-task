@@ -85,12 +85,21 @@ const ListForm = ({
 );
 
 ListForm.propTypes = {
+  inputRefs: PropTypes.shape({
+    name: PropTypes.instanceOf(Object).isRequired,
+    shop: PropTypes.instanceOf(Object).isRequired,
+  }).isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  color: PropTypes.string.isRequired,
   formInputs: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }).isRequired,
   onTextInputChange: PropTypes.func.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
+  focusInput: PropTypes.func.isRequired,
+  onAddButtonPress: PropTypes.func.isRequired,
+  onColorChange: PropTypes.func.isRequired,
 };
 
 export default ListForm;

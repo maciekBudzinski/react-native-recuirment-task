@@ -120,7 +120,7 @@ class ShoppingListsScreen extends Component {
     const { isListFormVisible, isListEditing, formInputs, color } = this.state;
     return (
       <Container>
-        <Header />
+        <Header title="Shopping lists" />
 
         {Object.keys(lists).length > 0 && (
           <ShoppingListsList

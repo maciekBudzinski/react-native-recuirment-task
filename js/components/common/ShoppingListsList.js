@@ -6,7 +6,7 @@ import ShoppingListItem from './ShoppingListItem';
 // const renderItem = ({ item }) => <ShoppingListItem {...item} />;
 
 const ShoppingListsList = ({ data, ...restProps }) => (
-  <FlatList inverted data={data} renderItem={({ item }) => <ShoppingListItem {...item} {...restProps} />} keyExtractor={({ id }) => id.toString()} />
+  <FlatList data={data.reverse()} renderItem={({ item }) => <ShoppingListItem {...item} {...restProps} />} keyExtractor={({ id }) => id.toString()} />
 );
 
 ShoppingListsList.propTypes = {

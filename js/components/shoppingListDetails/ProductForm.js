@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { ListItem, Text, Button, Icon, SwipeRow, Input, Item, Label, View, Card } from 'native-base';
+import { Keyboard } from 'react-native';
+import { Button, Icon, View, Card, Text, H2, H3 } from 'native-base';
 import styled from 'styled-components';
 import InputWithStackedLabel from '../common/InputWithStackedLabel';
 
 const Form = styled(Card)`
+  background: ${({ theme }) => theme.colors.LIGHT_GRAY};
   padding: 6px;
+`;
+
+const FormTitle = styled(View)`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const TitleIcon = styled(Icon)`
+  font-size: 22;
+  padding-right: 6px;
 `;
 
 const InputsRow = styled(View)`
   flex-direction: row;
 `;
 
-const NameInput = styled(InputWithStackedLabel)`
+const BaseInput = styled(InputWithStackedLabel)`
   flex: 1;
   margin-right: 12px;
+`;
+
+const NameInput = styled(BaseInput)`
   margin-bottom: 6px;
 `;
 
-const AmountInput = styled(InputWithStackedLabel)`
-  flex: 1;
-  margin-right: 12px;
-`;
+const AmountInput = styled(BaseInput)``;
 
-const UnitInput = styled(InputWithStackedLabel)`
-  flex: 1;
-  margin-right: 12px;
-`;
+const UnitInput = styled(BaseInput)``;
 
 const ButtonGroup = styled(View)`
   flex-direction: row;
@@ -66,8 +74,13 @@ class ProductForm extends Component {
 
   render() {
     const { formInputs, onTextInputChange } = this.props;
+    const isNameEmpty = formInputs.name === '';
     return (
       <Form>
+        <FormTitle>
+          <TitleIcon name="checkbox" />
+          <H3>Add new item:</H3>
+        </FormTitle>
         <InputsRow>
           <NameInput
             label="name"
@@ -93,14 +106,14 @@ class ProductForm extends Component {
             inputRef={this.inputRefs.unit}
             value={formInputs.unit}
             returnKeyType="done"
-            onSubmitEditing={this.saveTask}
+            onSubmitEditing={isNameEmpty ? () => this.focusFiled('name') : this.saveTask}
             onTextInputChange={text => onTextInputChange('unit', text)}
           />
           <ButtonGroup>
             <StyledButton transparent onPress={this.cancelAdding}>
               <Icon name="undo" />
             </StyledButton>
-            <StyledButton onPress={this.saveTask}>
+            <StyledButton disabled={isNameEmpty} onPress={this.saveTask}>
               <Icon name="add" />
             </StyledButton>
           </ButtonGroup>
@@ -110,6 +123,15 @@ class ProductForm extends Component {
   }
 }
 
-ProductForm.propTypes = {};
+ProductForm.propTypes = {
+  formInputs: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    amount: PropTypes.string.isRequired,
+    unit: PropTypes.string.isRequired,
+  }).isRequired,
+  onTextInputChange: PropTypes.func.isRequired,
+  onSavePress: PropTypes.func.isRequired,
+  onCancelPress: PropTypes.func.isRequired,
+};
 
 export default ProductForm;

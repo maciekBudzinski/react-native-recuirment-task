@@ -6,6 +6,7 @@ import ActionButton from '../components/shoppingLists/AddButton';
 import ListForm from '../components/shoppingLists/ListForm';
 import { addList, editList, deleteList, openList, addProduct } from '../modules/shoppingList/actions';
 import ShoppingListsList from '../components/common/ShoppingListsList';
+import Header from '../components/shoppingLists/Header';
 
 class ShoppingListsScreen extends Component {
   state = {
@@ -92,9 +93,7 @@ class ShoppingListsScreen extends Component {
     const { isListFormVisible, isListEditing, formInputs } = this.state;
     return (
       <Container>
-        <View>
-          <Text>ShoppingListsScreen</Text>
-        </View>
+        <Header />
 
         {lists.length > 0 && (
           <ShoppingListsList

@@ -6,16 +6,16 @@ import SettingsScreen from '../screens/Settings';
 
 const StackNavigator = createStackNavigator(
   {
+    Lists: {
+      screen: ShoppingListsScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
     Details: {
       screen: ShoppingListDetailsScreen,
       navigationOptions: {
         header: null,
-      },
-      Lists: {
-        screen: ShoppingListsScreen,
-        navigationOptions: {
-          header: null,
-        },
       },
     },
   },

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Container, Button, Left, Icon, Title, Body, Right, Subtitle } from 'native-base';
+import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ActionButton from '../components/shoppingLists/AddButton';
-import ListForm from '../components/shoppingLists/ListForm';
-import { addList, editList, deleteList, openList, addProduct, deleteProduct, toggleProduct } from '../modules/shoppingList/actions';
-import ShoppingListsList from '../components/common/ShoppingListsList';
+import PropTypes from 'prop-types';
+import { addProduct, deleteProduct, toggleProduct } from '../modules/shoppingList/actions';
 import ProductList from '../components/shoppingListDetails/ProductList';
 import ProductForm from '../components/shoppingListDetails/ProductForm';
 import Header from '../components/shoppingListDetails/Header';
@@ -14,9 +12,6 @@ class ShoppingListsScreen extends Component {
   constructor() {
     super();
     this.state = {
-      isListFormVisible: false,
-      editingListId: -1,
-      isListEditing: false,
       formInputs: {
         name: '',
         amount: '',
@@ -36,17 +31,6 @@ class ShoppingListsScreen extends Component {
       },
     });
   };
-  // onActionButtonPress = () => {
-  //   this.setState({
-  //     isListFormVisible: true,
-  //   });
-  // };
-
-  // onRequestListFormModalClose = () => {
-  //   this.setState({
-  //     isListFormVisible: false,
-  //   });
-  // };
 
   onTextInputChange = (inputName, text) => {
     this.setState(prevState => ({
@@ -57,11 +41,6 @@ class ShoppingListsScreen extends Component {
     }));
   };
 
-  // onAddProductPress = () => {
-  //   const { addProduct, currentOpenList } = this.props;
-  //   addProduct('produkt', 2, 'cm');
-  // };
-
   onSaveButtonPress = () => {
     const { addProduct } = this.props;
     const {
@@ -70,7 +49,7 @@ class ShoppingListsScreen extends Component {
 
     addProduct(name, amount, unit);
     this.clearInputs();
-    this.productsListRef.current.scrollToEnd({ animated: true });
+    setTimeout(() => this.productsListRef.current.scrollToEnd({ animated: true }), 100);
   };
 
   onCancelButtonPress = () => {
@@ -94,8 +73,8 @@ class ShoppingListsScreen extends Component {
 
   render() {
     const { lists, currentOpenListIndex } = this.props;
+    const { formInputs } = this.state;
     const { name, products } = lists[currentOpenListIndex];
-    const { isListFormVisible, isListEditing, formInputs } = this.state;
     return (
       <Container>
         <Header title={name} onBackButtonPress={this.onBackButtonPress} />
@@ -111,6 +90,15 @@ class ShoppingListsScreen extends Component {
     );
   }
 }
+
+ShoppingListsScreen.propTypes = {
+  lists: PropTypes.instanceOf(Array).isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
+  currentOpenListIndex: PropTypes.number.isRequired,
+  addProduct: PropTypes.func.isRequired,
+  toggleProduct: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   lists: state.shoppingList.lists,

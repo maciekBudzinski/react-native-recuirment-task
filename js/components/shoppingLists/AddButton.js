@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Fab, Icon } from 'native-base';
+import styled from 'styled-components';
+
+const StyledFab = styled(Fab)`
+  background-color: ${({ theme }) => theme.colors.PRIMARY};
+`;
 
 const ActionButton = ({ onPress }) => (
-  <Fab position="bottomRight" onPress={onPress}>
+  <StyledFab position="bottomRight" onPress={onPress}>
     <Icon name="add" />
-  </Fab>
+  </StyledFab>
 );
 
 ActionButton.propTypes = {

@@ -22,7 +22,7 @@ const Wrapper = styled(View)`
 `;
 
 const ButtonGroup = styled(View)`
-  margin-top: 24px;
+  margin-top: 40px;
   flex-direction: row;
 `;
 

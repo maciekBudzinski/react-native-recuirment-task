@@ -19,6 +19,7 @@ const InputWithStackedLabel = ({ label, inputRef, value, keyboardType, returnKey
       blurOnSubmit={false}
       onSubmitEditing={onSubmitEditing}
       onChangeText={onTextInputChange}
+      autoCapitalize="none"
     />
   </Item>
 );

@@ -38,12 +38,12 @@ const ItemSubtitle = styled(Text)`
 
 const ItemDate = styled(Text)``;
 
-const ShoppingListItem = ({ id, name, color, lastEditedTime, onEditButtonPress, onDeleteButtonPress, onPress }) => (
+const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonPress, onDeleteButtonPress, onPress }) => (
   <SwipeWrapper
     leftOpenValue={OPEN_VALUE}
     rightOpenValue={-OPEN_VALUE}
     left={
-      <Button success onPress={() => onEditButtonPress(id, name, color)}>
+      <Button success onPress={() => onEditButtonPress(id, name, shop, color)}>
         <Icon active name="add" />
       </Button>
     }
@@ -52,7 +52,7 @@ const ShoppingListItem = ({ id, name, color, lastEditedTime, onEditButtonPress, 
         <TouchableHighlight onPress={() => onPress(id)}>
           <ItemDetails>
             <ItemTitle>{name}</ItemTitle>
-            <ItemSubtitle>Shop name</ItemSubtitle>
+            <ItemSubtitle>{shop}</ItemSubtitle>
           </ItemDetails>
         </TouchableHighlight>
         <ItemDate note>{moment(lastEditedTime).format('DD-MM-YY HH:mm')}</ItemDate>

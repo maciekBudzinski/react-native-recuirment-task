@@ -1,18 +1,20 @@
 import * as listActions from './actionTypes';
 
-export const addList = (name, color) => ({
+export const addList = (name, shop, color) => ({
   type: listActions.ADD,
   payload: {
     name,
+    shop,
     color,
   },
 });
 
-export const editList = (id, name, color) => ({
+export const editList = (id, name, shop, color) => ({
   type: listActions.EDIT,
   payload: {
     id,
     name,
+    shop,
     color,
   },
 });

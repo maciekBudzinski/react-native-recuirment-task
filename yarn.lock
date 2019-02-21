@@ -5204,6 +5204,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-color-palette@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-color-palette/-/react-native-color-palette-2.0.2.tgz#ed898cb03839bb6f25d5cfff13d440bbf7f79690"
+  integrity sha512-ifpDEn6d1uE8aHrjQepdxnml/kjDFXpF+llWZ1P0lBE7s4FIwwIMWmxD7/gqhkD+6xfz3JYuFzGtsZx0NFD3kw==
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"

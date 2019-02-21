@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Keyboard } from 'react-native';
-import { Button, Icon, View, Card, Text, H2, H3 } from 'native-base';
+import { Button, Icon, View, Card } from 'native-base';
 import styled from 'styled-components';
 import InputWithStackedLabel from '../common/InputWithStackedLabel';
+import FormTitle from '../common/FormTitle';
 
 const Form = styled(Card)`
   background: ${({ theme }) => theme.colors.LIGHT_GRAY};
   padding: 6px;
-`;
-
-const FormTitle = styled(View)`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const TitleIcon = styled(Icon)`
-  font-size: 22;
-  padding-right: 6px;
 `;
 
 const InputsRow = styled(View)`
@@ -77,10 +68,7 @@ class ProductForm extends Component {
     const isNameEmpty = formInputs.name === '';
     return (
       <Form>
-        <FormTitle>
-          <TitleIcon name="checkbox" />
-          <H3>Add new item:</H3>
-        </FormTitle>
+        <FormTitle title="Add new item:" iconName="checkbox" />
         <InputsRow>
           <NameInput
             label="name"

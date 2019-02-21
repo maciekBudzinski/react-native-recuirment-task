@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   const { lists, currentOpenListIndex } = state;
   switch (action.type) {
     case listActions.ADD: {
-      const { name, color } = action.payload;
+      const { name, shop, color } = action.payload;
       return {
         ...state,
         lists: [
@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
             id: Date.now(),
             lastEditedTime: new Date(),
             name,
+            shop,
             color,
             products: [],
           },
@@ -25,10 +26,10 @@ export default (state = initialState, action) => {
       };
     }
     case listActions.EDIT: {
-      const { id, name, color } = action.payload;
+      const { id, name, shop, color } = action.payload;
       return {
         ...state,
-        lists: lists.map(list => (list.id === id ? { ...list, name, color, lastEditedTime: new Date() } : list)),
+        lists: lists.map(list => (list.id === id ? { ...list, name, shop, color, lastEditedTime: new Date() } : list)),
       };
     }
     case listActions.DELETE: {

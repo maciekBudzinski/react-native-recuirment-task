@@ -7,6 +7,9 @@ import ListForm from '../components/shoppingLists/ListForm';
 import { addList, editList, deleteList, openList, addProduct } from '../modules/shoppingList/actions';
 import ShoppingListsList from '../components/common/ShoppingListsList';
 import Header from '../components/shoppingLists/Header';
+import { LIST_COLORS } from '../style/colors';
+
+const randomColorIndex = Math.floor(Math.random() * LIST_COLORS.length);
 
 class ShoppingListsScreen extends Component {
   state = {
@@ -15,7 +18,18 @@ class ShoppingListsScreen extends Component {
     isListEditing: false,
     formInputs: {
       name: '',
+      shop: '',
     },
+    color: LIST_COLORS[randomColorIndex],
+  };
+
+  inputRefs = {
+    name: React.createRef(),
+    shop: React.createRef(),
+  };
+
+  focusInput = refName => {
+    this.inputRefs[refName].current._root.focus();
   };
 
   onActionButtonPress = () => {
@@ -44,31 +58,35 @@ class ShoppingListsScreen extends Component {
     const {
       isListEditing,
       editingListId,
-      formInputs: { name },
+      formInputs: { name, shop },
+      color,
     } = this.state;
 
     if (isListEditing) {
-      editList(editingListId, name, '#00f');
+      editList(editingListId, name, shop, color);
     } else {
-      addList(name, '#00f');
+      addList(name, shop, color);
     }
 
     this.setState({
       isListFormVisible: false,
       formInputs: {
         name: '',
+        shop: '',
       },
     });
   };
 
-  onEditListButtonPress = (id, name, color) => {
+  onEditListButtonPress = (id, name, shop, color) => {
     this.setState({
       isListFormVisible: true,
       isListEditing: true,
       editingListId: id,
       formInputs: {
         name,
+        shop,
       },
+      color,
     });
   };
 
@@ -88,9 +106,15 @@ class ShoppingListsScreen extends Component {
     deleteList(id);
   };
 
+  onColorChange = color => {
+    this.setState({
+      color,
+    });
+  };
+
   render() {
     const { lists } = this.props;
-    const { isListFormVisible, isListEditing, formInputs } = this.state;
+    const { isListFormVisible, isListEditing, formInputs, color } = this.state;
     return (
       <Container>
         <Header />
@@ -110,6 +134,10 @@ class ShoppingListsScreen extends Component {
           onRequestClose={this.onRequestListFormModalClose}
           onTextInputChange={this.onTextInputChange}
           onAddButtonPress={this.onAddListButtonPress}
+          inputRefs={this.inputRefs}
+          focusInput={this.focusInput}
+          color={color}
+          onColorChange={this.onColorChange}
         />
         <ActionButton onPress={this.onActionButtonPress} />
       </Container>

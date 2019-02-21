@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case listActions.ADD: {
       const { name, shop, color } = action.payload;
       const newList = {
-        id: Date.now(),
+        id: Date.now().toString(),
         lastEditedTime: new Date(),
         name,
         shop,
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
         isActive: true,
       };
       const listsCopy = deepClone(lists);
-      listsCopy[Date.now()] = newList;
+      listsCopy[Date.now().toString()] = newList;
 
       return {
         ...state,
@@ -67,8 +67,8 @@ export default (state = initialState, action) => {
 
     case listActions.ADD_PRODUCT: {
       const { name, amount, unit } = action.payload;
-      const newProduct = { id: Date.now(), name, lastEditedTime: Date.now(), amount, unit, checked: false };
-      listsCopy[currentOpenListId].products[Date.now()] = newProduct;
+      const newProduct = { id: Date.now().toString(), name, lastEditedTime: new Date(), amount, unit, checked: false };
+      listsCopy[currentOpenListId].products[Date.now().toString()] = newProduct;
 
       return {
         ...state,

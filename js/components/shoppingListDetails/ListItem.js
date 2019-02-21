@@ -48,7 +48,7 @@ const ProductItem = ({ id, name, amount, unit, checked, onProductToggle, onDelet
 );
 
 ProductItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   unit: PropTypes.string.isRequired,

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import filter from 'lodash.filter';
-import ActionButton from '../components/shoppingLists/AddButton';
-import ListForm from '../components/shoppingLists/ListForm';
-import { addList, editList, deleteList, openList, addProduct } from '../modules/shoppingList/actions';
-import ShoppingListsList from '../components/common/ShoppingListsList';
-import Header from '../components/shoppingLists/Header';
+import ActionButton from '../components/shoppingList/AddButton';
+import Form from '../components/shoppingList/Form';
+import { addList, editList, openList, deleteList, addProduct } from '../modules/shoppingList/actions';
+import ShoppingListsList from '../components/shoppingList/List';
+import Header from '../components/shoppingList/Header';
 import { LIST_COLORS } from '../style/colors';
 
 class List extends Component {
@@ -105,8 +106,11 @@ class List extends Component {
   };
 
   onDeleteListButtonPress = id => {
-    const { deleteList } = this.props;
-    deleteList(id);
+    const { deleteList, lists } = this.props;
+    const { name } = lists[id];
+    console.log(lists, id);
+
+    Alert.alert('Are you sure you want to delete this item?', [{ text: 'Cancel' }, { text: 'Yes', onPress: () => deleteList(id) }]);
   };
 
   onColorChange = color => {
@@ -116,20 +120,18 @@ class List extends Component {
   };
 
   render() {
-    const { lists, isActive, listTitle } = this.props;
-    const { isListFormVisible, isListEditing, formInputs, color } = this.state;
+    const { isActive, listTitle, lists } = this.props;
+    const { isListFormVisible, isListEditing, color, formInputs } = this.state;
     return (
       <Container>
         <Header title={listTitle} />
-        {Object.keys(lists).length > 0 && (
-          <ShoppingListsList
-            data={lists}
-            onEditButtonPress={this.onEditListButtonPress}
-            onDeleteButtonPress={this.onDeleteListButtonPress}
-            onPress={this.onListPress}
-          />
-        )}
-        <ListForm
+        <ShoppingListsList
+          data={lists}
+          onEditButtonPress={this.onEditListButtonPress}
+          onDeleteButtonPress={this.onDeleteListButtonPress}
+          onPress={this.onListPress}
+        />
+        <Form
           isVisible={isListFormVisible}
           isEditing={isListEditing}
           formInputs={formInputs}
@@ -148,14 +150,14 @@ class List extends Component {
 }
 
 List.propTypes = {
-  lists: PropTypes.instanceOf(Object).isRequired,
-  listTitle: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
+  listTitle: PropTypes.string.isRequired,
   addList: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
-  addProduct: PropTypes.func.isRequired,
   openList: PropTypes.func.isRequired,
+  addProduct: PropTypes.func.isRequired,
+  lists: PropTypes.instanceOf(Object).isRequired,
   navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
@@ -163,7 +165,7 @@ const mapStateToProps = (state, ownProps) => ({
   lists: filter(state.shoppingList.lists, ({ isActive }) => isActive === ownProps.isActive),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, deleteList, openList, addProduct }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, openList, deleteList, addProduct }, dispatch);
 
 export default connect(
   mapStateToProps,

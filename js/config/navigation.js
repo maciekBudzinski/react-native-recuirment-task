@@ -3,19 +3,18 @@ import React from 'react';
 import ShoppingListsScreen from '../screens/ShoppingLists';
 import ArchivedListsScreen from '../screens/ArchivedLists';
 import ShoppingListDetailsScreen from '../screens/ShoppingListDetails';
-import SettingsScreen from '../screens/Settings';
 import { NavigationIcon } from '../components/common/NavigationIcon';
 
 const StackNavigator = createStackNavigator(
   {
-    Details: {
-      screen: ShoppingListDetailsScreen,
+    Lists: {
+      screen: ShoppingListsScreen,
       navigationOptions: {
         header: null,
       },
     },
-    Lists: {
-      screen: ShoppingListsScreen,
+    Details: {
+      screen: ShoppingListDetailsScreen,
       navigationOptions: {
         header: null,
       },
@@ -23,7 +22,6 @@ const StackNavigator = createStackNavigator(
   },
   {
     navigationOptions: ({ navigation }) => ({
-      initialRouteName: 'Details',
       tabBarVisible: navigation.state.index !== 1,
     }),
   }
@@ -42,13 +40,6 @@ const RootNavigator = createBottomTabNavigator({
     navigationOptions: {
       title: 'Archive',
       tabBarIcon: () => <NavigationIcon iconName="lock" />,
-    },
-  },
-  Settings: {
-    screen: SettingsScreen,
-    navigationOptions: {
-      title: 'Settings',
-      tabBarIcon: () => <NavigationIcon iconName="settings" />,
     },
   },
 });

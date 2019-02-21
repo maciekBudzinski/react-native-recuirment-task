@@ -5,7 +5,7 @@ import { View, Text, Button, Icon } from 'native-base';
 import styled from 'styled-components';
 import ColorPalette from 'react-native-color-palette';
 import FormTitle from '../common/FormTitle';
-import InputWithStackedLabel from '../common/InputWithStackedLabel';
+import Input from '../common/Input';
 import { LIST_COLORS } from '../../style/colors';
 
 const Background = styled(View)`
@@ -31,22 +31,22 @@ const AddButton = styled(Button)`
 `;
 
 const ListForm = ({
-  onRequestClose,
   isVisible,
   isEditing,
-  inputRefs,
   color,
-  focusInput,
   formInputs,
+  inputRefs,
   onTextInputChange,
-  onAddButtonPress,
+  onRequestClose,
   onColorChange,
+  focusInput,
+  onAddButtonPress,
 }) => (
   <Modal animationType="fade" transparent visible={isVisible} onRequestClose={onRequestClose}>
     <Background>
       <Wrapper>
         <FormTitle title="Add new list" iconName="list" />
-        <InputWithStackedLabel
+        <Input
           label="name"
           inputRef={inputRefs.name}
           value={formInputs.name}
@@ -54,7 +54,7 @@ const ListForm = ({
           onSubmitEditing={() => focusInput('shop')}
           onTextInputChange={text => onTextInputChange('name', text)}
         />
-        <InputWithStackedLabel
+        <Input
           label="shop"
           inputRef={inputRefs.shop}
           value={formInputs.shop}
@@ -70,7 +70,6 @@ const ListForm = ({
           paletteStyles={{ flex: 1, backgroundColot: 'red' }}
           icon={<Icon name="checkmark" size={40} color="black" />}
         />
-
         <ButtonGroup>
           <AddButton full onPress={onAddButtonPress}>
             <Text>{isEditing ? 'Save' : 'Add'}</Text>
@@ -85,18 +84,18 @@ const ListForm = ({
 );
 
 ListForm.propTypes = {
-  inputRefs: PropTypes.shape({
-    name: PropTypes.instanceOf(Object).isRequired,
-    shop: PropTypes.instanceOf(Object).isRequired,
-  }).isRequired,
+  isVisible: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
   formInputs: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }).isRequired,
+  inputRefs: PropTypes.shape({
+    name: PropTypes.instanceOf(Object).isRequired,
+    shop: PropTypes.instanceOf(Object).isRequired,
+  }).isRequired,
   onTextInputChange: PropTypes.func.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  isVisible: PropTypes.bool.isRequired,
   focusInput: PropTypes.func.isRequired,
   onAddButtonPress: PropTypes.func.isRequired,
   onColorChange: PropTypes.func.isRequired,

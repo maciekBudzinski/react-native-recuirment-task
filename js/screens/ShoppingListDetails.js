@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { addProduct, deleteProduct, toggleListActive, toggleProduct } from '../modules/shoppingList/actions';
-import ProductList from '../components/shoppingListDetails/ProductList';
-import ProductForm from '../components/shoppingListDetails/ProductForm';
+import List from '../components/shoppingListDetails/List';
+import Form from '../components/shoppingListDetails/Form';
 import Header from '../components/shoppingListDetails/Header';
 import ArchiveListInfo from '../components/shoppingListDetails/ArchiveListInfo';
 import { showToast } from '../services/Toasts';
@@ -87,7 +87,7 @@ class ShoppingListsScreen extends Component {
   };
 
   render() {
-    const { lists, currentOpenListId } = this.props;
+    const { currentOpenListId, lists } = this.props;
     const { formInputs } = this.state;
     const { id, isActive, name, shop, products } = lists[currentOpenListId];
     return (
@@ -100,9 +100,9 @@ class ShoppingListsScreen extends Component {
           onBackButtonPress={this.onBackButtonPress}
           onToggleListActive={this.onToggleListActive}
         />
-        <ProductList listRef={this.productsListRef} data={products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
+        <List listRef={this.productsListRef} data={products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
         {isActive ? (
-          <ProductForm
+          <Form
             formInputs={formInputs}
             clearInputs={this.clearInputs}
             onTextInputChange={this.onTextInputChange}
@@ -118,13 +118,13 @@ class ShoppingListsScreen extends Component {
 }
 
 ShoppingListsScreen.propTypes = {
-  lists: PropTypes.instanceOf(Object).isRequired,
-  navigation: PropTypes.instanceOf(Object).isRequired,
-  currentOpenListId: PropTypes.number.isRequired,
+  currentOpenListId: PropTypes.string.isRequired,
   addProduct: PropTypes.func.isRequired,
   toggleProduct: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
   toggleListActive: PropTypes.func.isRequired,
+  lists: PropTypes.instanceOf(Object).isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = state => ({

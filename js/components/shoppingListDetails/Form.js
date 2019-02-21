@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Keyboard } from 'react-native';
 import { Button, Icon, View, Card } from 'native-base';
 import styled from 'styled-components';
-import InputWithStackedLabel from '../common/InputWithStackedLabel';
+import Input from '../common/Input';
 import FormTitle from '../common/FormTitle';
 
 const Form = styled(Card)`
@@ -15,7 +15,7 @@ const InputsRow = styled(View)`
   flex-direction: row;
 `;
 
-const BaseInput = styled(InputWithStackedLabel)`
+const BaseInput = styled(Input)`
   flex: 1;
   margin-right: 12px;
 `;
@@ -23,10 +23,6 @@ const BaseInput = styled(InputWithStackedLabel)`
 const NameInput = styled(BaseInput)`
   margin-bottom: 6px;
 `;
-
-const AmountInput = styled(BaseInput)``;
-
-const UnitInput = styled(BaseInput)``;
 
 const ButtonGroup = styled(View)`
   flex-direction: row;
@@ -80,7 +76,7 @@ class ProductForm extends Component {
           />
         </InputsRow>
         <InputsRow>
-          <AmountInput
+          <BaseInput
             label="amount"
             inputRef={this.inputRefs.amount}
             value={formInputs.amount}
@@ -89,7 +85,7 @@ class ProductForm extends Component {
             onSubmitEditing={() => this.focusFiled('unit')}
             onTextInputChange={text => onTextInputChange('amount', text)}
           />
-          <UnitInput
+          <BaseInput
             label="unit"
             inputRef={this.inputRefs.unit}
             value={formInputs.unit}

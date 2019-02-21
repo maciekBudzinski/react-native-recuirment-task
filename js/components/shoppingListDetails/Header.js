@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Right, Body, Left, Title, Subtitle } from 'native-base';
-import HeaderLayout from '../common/Header';
+import { Header as NBHeader, Button, Icon, Right, Body, Left, Title, Subtitle } from 'native-base';
 
 const Header = ({ isActive, name, shop, onBackButtonPress, onToggleListActive }) => (
-  <HeaderLayout>
+  <NBHeader>
     <Left>
       <Button transparent onPress={onBackButtonPress}>
         <Icon name="arrow-back" />
@@ -19,7 +18,7 @@ const Header = ({ isActive, name, shop, onBackButtonPress, onToggleListActive })
         <Icon name={isActive ? 'lock' : 'unlock'} />
       </Button>
     </Right>
-  </HeaderLayout>
+  </NBHeader>
 );
 
 Header.propTypes = {

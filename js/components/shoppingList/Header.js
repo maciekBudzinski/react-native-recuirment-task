@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Icon, Right, Body, Left, Title } from 'native-base';
+import { Header as NBHeader, Button, Icon, Right, Body, Left, Title } from 'native-base';
 import PropTypes from 'prop-types';
-import HeaderLayout from '../common/Header';
 
 const Header = ({ title }) => (
-  <HeaderLayout>
+  <NBHeader>
     <Left>
       <Button transparent>
         <Icon name="list" />
@@ -14,7 +13,7 @@ const Header = ({ title }) => (
       <Title>{title}</Title>
     </Body>
     <Right />
-  </HeaderLayout>
+  </NBHeader>
 );
 
 Header.propTypes = {

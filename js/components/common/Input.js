@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Item, Label, Input } from 'native-base';
+import { Item, Label, Input as NBInput } from 'native-base';
 import styled from 'styled-components';
 
-const StyledInput = styled(Input)`
+const StyledInput = styled(NBInput)`
   width: 100%;
 `;
 
-const InputWithStackedLabel = ({ label, inputRef, value, keyboardType, returnKeyType, onSubmitEditing, onTextInputChange, style }) => (
+const Input = ({ label, inputRef, value, keyboardType, returnKeyType, onSubmitEditing, onTextInputChange, style }) => (
   <Item stackedLabel style={style}>
     <Label>{label}</Label>
     <StyledInput
@@ -24,7 +24,7 @@ const InputWithStackedLabel = ({ label, inputRef, value, keyboardType, returnKey
   </Item>
 );
 
-InputWithStackedLabel.propTypes = {
+Input.propTypes = {
   label: PropTypes.string.isRequired,
   inputRef: PropTypes.instanceOf(Object).isRequired,
   value: PropTypes.string.isRequired,
@@ -35,9 +35,9 @@ InputWithStackedLabel.propTypes = {
   style: PropTypes.instanceOf(Object),
 };
 
-InputWithStackedLabel.defaultProps = {
+Input.defaultProps = {
   keyboardType: 'default',
   style: {},
 };
 
-export default InputWithStackedLabel;
+export default Input;

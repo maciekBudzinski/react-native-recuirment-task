@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableHighlight } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import { Text, Button, Icon, SwipeRow, View, H3, Card } from 'native-base';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -47,15 +47,15 @@ const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonP
       </Button>
     }
     body={
-      <ItemWrapper borderColor={color}>
-        <TouchableHighlight onPress={() => onPress(id)}>
+      <TouchableWithoutFeedback onPress={() => onPress(id)}>
+        <ItemWrapper borderColor={color}>
           <ItemDetails>
             <ItemTitle>{name}</ItemTitle>
             <ItemSubtitle>{shop}</ItemSubtitle>
           </ItemDetails>
-        </TouchableHighlight>
-        <ItemDate note>{moment(lastEditedTime).format('DD-MM-YY HH:mm')}</ItemDate>
-      </ItemWrapper>
+          <ItemDate note>{moment(lastEditedTime).format('DD-MM-YY HH:mm')}</ItemDate>
+        </ItemWrapper>
+      </TouchableWithoutFeedback>
     }
     right={
       <Button danger onPress={() => onDeleteButtonPress(id)}>
@@ -70,7 +70,7 @@ ShoppingListItem.propTypes = {
   name: PropTypes.string.isRequired,
   shop: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  lastEditedTime: PropTypes.instanceOf(Date).isRequired,
+  lastEditedTime: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
   onEditButtonPress: PropTypes.func.isRequired,
   onDeleteButtonPress: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,

@@ -2,22 +2,22 @@ import React from 'react';
 import { Header as NBHeader, Button, Icon, Right, Body, Left, Title } from 'native-base';
 import PropTypes from 'prop-types';
 
-const Header = ({ title }) => (
+const Header = ({ isActive }) => (
   <NBHeader>
     <Left>
       <Button transparent>
-        <Icon name="list" />
+        <Icon name={isActive ? 'list' : 'lock'} />
       </Button>
     </Left>
     <Body>
-      <Title>{title}</Title>
+      <Title>{isActive ? 'Shopping lists' : 'Archived lists'}</Title>
     </Body>
     <Right />
   </NBHeader>
 );
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 export default Header;

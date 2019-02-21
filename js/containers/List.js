@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import filter from 'lodash.filter';
 import ActionButton from '../components/shoppingList/AddButton';
 import Form from '../components/shoppingList/Form';
 import { addList, editList, openList, deleteList, addProduct } from '../modules/shoppingList/actions';
@@ -106,11 +105,12 @@ class List extends Component {
   };
 
   onDeleteListButtonPress = id => {
-    const { deleteList, lists } = this.props;
-    const { name } = lists[id];
-    console.log(lists, id);
+    const { deleteList } = this.props;
 
-    Alert.alert('Are you sure you want to delete this item?', [{ text: 'Cancel' }, { text: 'Yes', onPress: () => deleteList(id) }]);
+    Alert.alert('Are you sure you want to delete this item?', 'Give me one more chance...', [
+      { text: 'Cancel' },
+      { text: 'Yes, delete', onPress: () => deleteList(id) },
+    ]);
   };
 
   onColorChange = color => {
@@ -120,11 +120,11 @@ class List extends Component {
   };
 
   render() {
-    const { isActive, listTitle, lists } = this.props;
+    const { isActive, lists } = this.props;
     const { isListFormVisible, isListEditing, color, formInputs } = this.state;
     return (
       <Container>
-        <Header title={listTitle} />
+        <Header isActive={isActive} />
         <ShoppingListsList
           data={lists}
           onEditButtonPress={this.onEditListButtonPress}
@@ -151,7 +151,6 @@ class List extends Component {
 
 List.propTypes = {
   isActive: PropTypes.bool.isRequired,
-  listTitle: PropTypes.string.isRequired,
   addList: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
@@ -162,7 +161,7 @@ List.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  lists: filter(state.shoppingList.lists, ({ isActive }) => isActive === ownProps.isActive),
+  lists: Object.values(state.shoppingList.lists).filter(({ isActive }) => isActive === ownProps.isActive),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, openList, deleteList, addProduct }, dispatch);

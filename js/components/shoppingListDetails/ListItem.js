@@ -4,23 +4,23 @@ import { ListItem as NBListItem, Text, Button, Icon, Right, CheckBox, Body, Left
 import styled from 'styled-components';
 import { COLORS } from '../../style/colors';
 
-const ListItem = styled(NBListItem)`
+const Wrapper = styled(NBListItem)`
   opacity: ${({ checked }) => (checked ? 0.5 : 1)};
   margin-left: 0;
 `;
 
-const ItemInfo = styled(Body)`
+const Info = styled(Body)`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 
-const ItemName = styled(Text)`
+const Name = styled(Text)`
   flex: 1;
 `;
 
-const ItemAmount = styled(Text)``;
+const Amount = styled(Text)``;
 
 const DeleteButton = styled(Button)``;
 
@@ -29,22 +29,22 @@ const DeleteButtonContainer = styled(Right)`
 `;
 
 const ProductItem = ({ id, name, amount, unit, checked, onProductToggle, onDeletePress }) => (
-  <ListItem icon checked={checked}>
+  <Wrapper icon checked={checked}>
     <Left>
       <CheckBox onPress={() => onProductToggle(id)} checked={checked} color={COLORS.PRIMARY} />
     </Left>
-    <ItemInfo>
-      <ItemName>{name}</ItemName>
-      <ItemAmount>
+    <Info>
+      <Name>{name}</Name>
+      <Amount>
         {amount} {unit}
-      </ItemAmount>
-    </ItemInfo>
+      </Amount>
+    </Info>
     <DeleteButtonContainer>
       <DeleteButton onPress={() => onDeletePress(id)} transparent>
         <Icon name="trash" />
       </DeleteButton>
     </DeleteButtonContainer>
-  </ListItem>
+  </Wrapper>
 );
 
 ProductItem.propTypes = {

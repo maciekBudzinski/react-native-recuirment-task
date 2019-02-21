@@ -8,7 +8,7 @@ import { DEVICE_WIDTH } from '../../config/constans';
 
 const OPEN_VALUE = 75;
 
-const ItemWrapper = styled(Card)`
+const Wrapper = styled(Card)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -24,18 +24,18 @@ const SwipeWrapper = styled(SwipeRow)`
   margin: 0px;
 `;
 
-const ItemDetails = styled(View)`
+const Details = styled(View)`
   height: 50px;
   justify-content: center;
 `;
 
-const ItemTitle = styled(H3)``;
+const Title = styled(H3)``;
 
-const ItemSubtitle = styled(Text)`
+const Subtitle = styled(Text)`
   opacity: 0.7;
 `;
 
-const ItemDate = styled(Text)``;
+const Date = styled(Text)``;
 
 const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonPress, onDeleteButtonPress, onPress }) => (
   <SwipeWrapper
@@ -48,13 +48,13 @@ const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonP
     }
     body={
       <TouchableWithoutFeedback onPress={() => onPress(id)}>
-        <ItemWrapper borderColor={color}>
-          <ItemDetails>
-            <ItemTitle>{name}</ItemTitle>
-            <ItemSubtitle>{shop}</ItemSubtitle>
-          </ItemDetails>
-          <ItemDate note>{moment(lastEditedTime).format('DD-MM-YY HH:mm')}</ItemDate>
-        </ItemWrapper>
+        <Wrapper borderColor={color}>
+          <Details>
+            <Title>{name}</Title>
+            <Subtitle>{shop}</Subtitle>
+          </Details>
+          <Date note>{moment(lastEditedTime).format('DD-MM-YY HH:mm')}</Date>
+        </Wrapper>
       </TouchableWithoutFeedback>
     }
     right={

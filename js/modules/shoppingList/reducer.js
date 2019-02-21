@@ -1,87 +1,89 @@
 import * as listActions from './actionTypes';
+import { deepClone } from '../../config/helpers';
 
 const initialState = {
-  lists: [],
-  currentOpenListIndex: null,
+  lists: {},
+  currentOpenListId: null,
 };
 
 export default (state = initialState, action) => {
-  const { lists, currentOpenListIndex } = state;
+  const { lists, currentOpenListId } = state;
+  const listsCopy = deepClone(lists);
   switch (action.type) {
     case listActions.ADD: {
       const { name, shop, color } = action.payload;
+      const newList = {
+        id: Date.now(),
+        lastEditedTime: new Date(),
+        name,
+        shop,
+        color,
+        products: {},
+        isActive: true,
+      };
+      const listsCopy = deepClone(lists);
+      listsCopy[Date.now()] = newList;
+
       return {
         ...state,
-        lists: [
-          ...lists,
-          {
-            id: Date.now(),
-            lastEditedTime: new Date(),
-            name,
-            shop,
-            color,
-            products: [],
-          },
-        ],
+        lists: listsCopy,
       };
     }
     case listActions.EDIT: {
       const { id, name, shop, color } = action.payload;
+      listsCopy[id] = { ...lists[id], name, shop, color, lastEditedTime: new Date() };
+
       return {
         ...state,
-        lists: lists.map(list => (list.id === id ? { ...list, name, shop, color, lastEditedTime: new Date() } : list)),
+        lists: listsCopy,
       };
     }
     case listActions.DELETE: {
-      const { id: deletingId } = action.payload;
+      const { id } = action.payload;
+      delete listsCopy[id];
       return {
         ...state,
-        lists: lists.filter(({ id }) => id !== deletingId),
+        lists: listsCopy,
       };
     }
 
     case listActions.OPEN: {
-      const { id: openingId } = action.payload;
+      const { id } = action.payload;
+
       return {
         ...state,
-        currentOpenListIndex: lists.findIndex(({ id }) => id === openingId),
+        currentOpenListId: id,
       };
     }
 
     case listActions.ADD_PRODUCT: {
       const { name, amount, unit } = action.payload;
-      const newProduct = { id: Date.now(), name, amount, unit, checked: false };
-      return {
-        ...state,
-        lists: lists.map((list, index) => (index === currentOpenListIndex ? { ...list, products: [...list.products, { ...newProduct }] } : list)),
-      };
-    }
+      const newProduct = { id: Date.now(), name, lastEditedTime: Date.now(), amount, unit, checked: false };
+      listsCopy[currentOpenListId].products[Date.now()] = newProduct;
 
-    case listActions.EDIT_PRODUCT: {
       return {
         ...state,
+        lists: listsCopy,
       };
     }
 
     case listActions.DELETE_PRODUCT: {
-      const { id: deletingId } = action.payload;
+      const { id } = action.payload;
+      delete listsCopy[currentOpenListId].products[id];
+
       return {
         ...state,
-        lists: lists.map((list, index) =>
-          index === currentOpenListIndex ? { ...list, products: list.products.filter(({ id }) => id !== deletingId) } : list
-        ),
+        lists: listsCopy,
       };
     }
 
     case listActions.TOGGLE_PRODUCT: {
       const { id } = action.payload;
+      listsCopy[currentOpenListId].products[id].checked = !lists[currentOpenListId].products[id].checked;
+
       return {
         ...state,
-        lists: lists.map((list, index) =>
-          index === currentOpenListIndex
-            ? { ...list, products: list.products.map(product => (product.id === id ? { ...product, checked: !product.checked } : product)) }
-            : list
-        ),
+        lists: listsCopy,
       };
     }
 

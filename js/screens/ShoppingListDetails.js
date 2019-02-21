@@ -72,9 +72,9 @@ class ShoppingListsScreen extends Component {
   };
 
   render() {
-    const { lists, currentOpenListIndex } = this.props;
+    const { lists, currentOpenListId } = this.props;
     const { formInputs } = this.state;
-    const { name, products } = lists[currentOpenListIndex];
+    const { name, products } = lists[currentOpenListId];
     return (
       <Container>
         <Header title={name} onBackButtonPress={this.onBackButtonPress} />
@@ -92,9 +92,9 @@ class ShoppingListsScreen extends Component {
 }
 
 ShoppingListsScreen.propTypes = {
-  lists: PropTypes.instanceOf(Array).isRequired,
+  lists: PropTypes.instanceOf(Object).isRequired,
   navigation: PropTypes.instanceOf(Object).isRequired,
-  currentOpenListIndex: PropTypes.number.isRequired,
+  currentOpenListId: PropTypes.number.isRequired,
   addProduct: PropTypes.func.isRequired,
   toggleProduct: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
@@ -102,7 +102,7 @@ ShoppingListsScreen.propTypes = {
 
 const mapStateToProps = state => ({
   lists: state.shoppingList.lists,
-  currentOpenListIndex: state.shoppingList.currentOpenListIndex,
+  currentOpenListId: state.shoppingList.currentOpenListId,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addProduct, deleteProduct, toggleProduct }, dispatch);

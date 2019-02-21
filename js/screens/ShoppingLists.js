@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,7 +21,7 @@ class ShoppingListsScreen extends Component {
       name: '',
       shop: '',
     },
-    color: LIST_COLORS[randomColorIndex],
+    color: '',
   };
 
   inputRefs = {
@@ -33,8 +34,11 @@ class ShoppingListsScreen extends Component {
   };
 
   onActionButtonPress = () => {
+    const randomColorIndex = Math.floor(Math.random() * LIST_COLORS.length);
+
     this.setState({
       isListFormVisible: true,
+      color: LIST_COLORS[randomColorIndex],
     });
   };
 
@@ -119,7 +123,7 @@ class ShoppingListsScreen extends Component {
       <Container>
         <Header />
 
-        {lists.length > 0 && (
+        {Object.keys(lists).length > 0 && (
           <ShoppingListsList
             data={lists}
             onEditButtonPress={this.onEditListButtonPress}
@@ -144,6 +148,10 @@ class ShoppingListsScreen extends Component {
     );
   }
 }
+
+ShoppingListsScreen.propTypes = {
+  lists: PropTypes.instanceOf(Object).isRequired,
+};
 
 const mapStateToProps = state => ({
   lists: state.shoppingList.lists,

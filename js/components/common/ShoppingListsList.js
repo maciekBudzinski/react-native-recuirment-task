@@ -6,11 +6,15 @@ import ShoppingListItem from './ShoppingListItem';
 // const renderItem = ({ item }) => <ShoppingListItem {...item} />;
 
 const ShoppingListsList = ({ data, ...restProps }) => (
-  <FlatList data={data.reverse()} renderItem={({ item }) => <ShoppingListItem {...item} {...restProps} />} keyExtractor={({ id }) => id.toString()} />
+  <FlatList
+    data={Object.values(data)}
+    renderItem={({ item }) => <ShoppingListItem {...item} {...restProps} />}
+    keyExtractor={({ id }) => id.toString()}
+  />
 );
 
 ShoppingListsList.propTypes = {
-  data: PropTypes.instanceOf(Array).isRequired,
+  data: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default ShoppingListsList;

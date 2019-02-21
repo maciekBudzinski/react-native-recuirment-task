@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
-import { ListItem, Text, Button, Icon, SwipeRow, View, Right, Body, Left, H3, Card } from 'native-base';
+import { TouchableHighlight } from 'react-native';
+import { Text, Button, Icon, SwipeRow, View, H3, Card } from 'native-base';
 import styled from 'styled-components';
 import moment from 'moment';
 import { DEVICE_WIDTH } from '../../config/constans';
-import { formatDate } from '../../config/helpers';
 
 const OPEN_VALUE = 75;
 
@@ -43,8 +42,8 @@ const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonP
     leftOpenValue={OPEN_VALUE}
     rightOpenValue={-OPEN_VALUE}
     left={
-      <Button success onPress={() => onEditButtonPress(id, name, shop, color)}>
-        <Icon active name="add" />
+      <Button info onPress={() => onEditButtonPress(id, name, shop, color)}>
+        <Icon active name="create" />
       </Button>
     }
     body={
@@ -67,9 +66,14 @@ const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonP
 );
 
 ShoppingListItem.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  shop: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  // lastEditedTime: PropTypes.instanceOf(Date).isRequired,
+  lastEditedTime: PropTypes.instanceOf(Date).isRequired,
+  onEditButtonPress: PropTypes.func.isRequired,
+  onDeleteButtonPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default ShoppingListItem;

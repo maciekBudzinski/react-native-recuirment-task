@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Right, Body, Left, Title, Subtitle } from 'native-base';
 import HeaderLayout from '../common/Header';
 
-const Header = ({ id, isActive, title, onBackButtonPress, onToggleListActive }) => (
+const Header = ({ isActive, name, shop, onBackButtonPress, onToggleListActive }) => (
   <HeaderLayout>
     <Left>
       <Button transparent onPress={onBackButtonPress}>
@@ -11,8 +11,8 @@ const Header = ({ id, isActive, title, onBackButtonPress, onToggleListActive }) 
       </Button>
     </Left>
     <Body>
-      <Title>{title}</Title>
-      <Subtitle>subtitle</Subtitle>
+      <Title>{name}</Title>
+      <Subtitle>{shop}</Subtitle>
     </Body>
     <Right>
       <Button transparent onPress={onToggleListActive}>
@@ -23,8 +23,11 @@ const Header = ({ id, isActive, title, onBackButtonPress, onToggleListActive }) 
 );
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  shop: PropTypes.string.isRequired,
   onBackButtonPress: PropTypes.func.isRequired,
+  onToggleListActive: PropTypes.func.isRequired,
 };
 
 export default Header;

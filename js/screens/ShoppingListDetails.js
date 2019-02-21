@@ -89,10 +89,17 @@ class ShoppingListsScreen extends Component {
   render() {
     const { lists, currentOpenListId } = this.props;
     const { formInputs } = this.state;
-    const { id, isActive, name, products } = lists[currentOpenListId];
+    const { id, isActive, name, shop, products } = lists[currentOpenListId];
     return (
       <Container>
-        <Header id={id} isActive={isActive} title={name} onBackButtonPress={this.onBackButtonPress} onToggleListActive={this.onToggleListActive} />
+        <Header
+          id={id}
+          isActive={isActive}
+          name={name}
+          shop={shop}
+          onBackButtonPress={this.onBackButtonPress}
+          onToggleListActive={this.onToggleListActive}
+        />
         <ProductList listRef={this.productsListRef} data={products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
         {isActive ? (
           <ProductForm

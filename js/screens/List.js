@@ -33,12 +33,18 @@ class List extends Component {
     this.inputRefs[refName].current._root.focus();
   };
 
-  onActionButtonPress = () => {
-    const randomColorIndex = Math.floor(Math.random() * LIST_COLORS.length);
+  onTextInputChange = (inputName, text) => {
+    this.setState(prevState => ({
+      formInputs: {
+        ...prevState.formInputs,
+        [inputName]: text,
+      },
+    }));
+  };
 
+  onColorChange = color => {
     this.setState({
-      isListFormVisible: true,
-      color: LIST_COLORS[randomColorIndex],
+      color,
     });
   };
 
@@ -48,13 +54,12 @@ class List extends Component {
     });
   };
 
-  onTextInputChange = (inputName, text) => {
-    this.setState(prevState => ({
-      formInputs: {
-        ...prevState.formInputs,
-        [inputName]: text,
-      },
-    }));
+  onActionButtonPress = () => {
+    const randomColorIndex = Math.floor(Math.random() * LIST_COLORS.length);
+    this.setState({
+      isListFormVisible: true,
+      color: LIST_COLORS[randomColorIndex],
+    });
   };
 
   onAddListButtonPress = () => {
@@ -94,30 +99,24 @@ class List extends Component {
     });
   };
 
+  onDeleteListButtonPress = id => {
+    const { deleteList } = this.props;
+
+    Alert.alert('Are you sure you want to delete this list?', 'Give me one more chance...', [
+      { text: 'Cancel' },
+      { text: 'Yes, delete', onPress: () => deleteList(id) },
+    ]);
+  };
+
   onListPress = id => {
     const { navigation, openList } = this.props;
     openList(id);
     navigation.navigate('Details');
   };
 
-  onDeleteListButtonPress = id => {
-    const { deleteList } = this.props;
-
-    Alert.alert('Are you sure you want to delete this item?', 'Give me one more chance...', [
-      { text: 'Cancel' },
-      { text: 'Yes, delete', onPress: () => deleteList(id) },
-    ]);
-  };
-
   onFilterButtonPress = () => {
     const { changeSortOrder } = this.props;
     changeSortOrder();
-  };
-
-  onColorChange = color => {
-    this.setState({
-      color,
-    });
   };
 
   render() {

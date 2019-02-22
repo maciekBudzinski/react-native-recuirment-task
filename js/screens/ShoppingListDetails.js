@@ -90,14 +90,14 @@ class ShoppingListsScreen extends Component {
     }
   };
 
-  onBackButtonPress = () => {
-    const { navigation } = this.props;
-    navigation.goBack();
-  };
-
   onToggleListActive = () => {
     const { toggleListActive } = this.props;
     toggleListActive();
+  };
+
+  onBackButtonPress = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
   };
 
   render() {

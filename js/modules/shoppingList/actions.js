@@ -5,7 +5,7 @@ export const addList = (name, shop, color) => ({
   type: listActions.ADD,
   payload: {
     id: uuid(),
-    lstEditedTime: new Date(),
+    dateCreated: new Date(),
     name,
     shop,
     color,

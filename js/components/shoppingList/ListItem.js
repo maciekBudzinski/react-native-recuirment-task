@@ -37,7 +37,7 @@ const Subtitle = styled(Text)`
 
 const Date = styled(Text)``;
 
-const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonPress, onDeleteButtonPress, onPress }) => (
+const ShoppingListItem = ({ id, name, shop, color, dateCreated, onEditButtonPress, onDeleteButtonPress, onPress }) => (
   <SwipeWrapper
     leftOpenValue={OPEN_VALUE}
     rightOpenValue={-OPEN_VALUE}
@@ -53,7 +53,7 @@ const ShoppingListItem = ({ id, name, shop, color, lastEditedTime, onEditButtonP
             <Title>{name}</Title>
             <Subtitle>{shop}</Subtitle>
           </Details>
-          <Date note>{moment(lastEditedTime).format('DD-MM-YY HH:mm')}</Date>
+          <Date note>{moment(dateCreated).format('DD-MM-YY HH:mm')}</Date>
         </Wrapper>
       </TouchableWithoutFeedback>
     }
@@ -70,7 +70,7 @@ ShoppingListItem.propTypes = {
   name: PropTypes.string.isRequired,
   shop: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  lastEditedTime: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
+  dateCreated: PropTypes.oneOfType([PropTypes.instanceOf(Object), PropTypes.string]).isRequired,
   onEditButtonPress: PropTypes.func.isRequired,
   onDeleteButtonPress: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,

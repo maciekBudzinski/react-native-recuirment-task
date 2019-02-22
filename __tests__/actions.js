@@ -22,7 +22,7 @@ describe('actions', () => {
       type: types.ADD,
       payload: {
         id,
-        lstEditedTime: new Date(),
+        dateCreated: new Date(),
         name,
         shop,
         color,

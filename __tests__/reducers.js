@@ -1,16 +1,38 @@
 import reducer from '../js/modules/shoppingList/reducer';
 import * as types from '../js/modules/shoppingList/actionTypes';
+import { deepClone } from '../js/config/helpers';
 
 describe('shopping list reducer', () => {
   const newList1 = {
     id: 'list-id',
-    lastEditedTime: new Date('2019-02-21T14:41:20'),
+    dateCreated: new Date('2019-02-21T14:41:20'),
     name: 'New list 1',
     shop: '7 eleven',
     color: '#f00',
   };
 
-  it('should handle ADD', () => {
+  const lists = {
+    'list-1': {
+      id: 'list-1',
+      dateCreated: new Date('2019-02-21T14:41:20'),
+      name: 'New list 1',
+      shop: '7 eleven',
+      color: '#f00',
+      isActive: true,
+      products: {},
+    },
+    'list-2': {
+      id: 'list-2',
+      dateCreated: new Date('2019-02-21T14:41:20'),
+      name: 'New list 2',
+      shop: '7 eleven',
+      color: '#f00',
+      isActive: true,
+      products: {},
+    },
+  };
+
+  it('should handle list ADD', () => {
     expect(
       reducer(
         { lists: {}, currentOpenListId: null },
@@ -25,11 +47,30 @@ describe('shopping list reducer', () => {
       currentOpenListId: null,
       lists: {
         [newList1.id]: {
-          ...newList1,
+          id: 'list-1',
+          name: 'list-2',
           isActive: true,
           products: {},
+
         },
       },
+    });
+  });
+
+  it('should handle list EDIT', () => {
+    expect(
+      reducer(
+        { lists: { ...lists }, currentOpenListId: null },
+        {
+          type: types.EDIT,
+          payload: {
+            ...newList1,
+          },
+        }
+      )
+    ).toEqual({
+      currentOpenListId: null,
+      lists: deepClone(lists).
     });
   });
 });

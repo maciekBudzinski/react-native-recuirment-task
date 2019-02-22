@@ -12,16 +12,19 @@ export default (state = initialState, action) => {
   const listsCopy = deepClone(lists);
   switch (action.type) {
     case listActions.ADD: {
-      const { id, lastEditedTime, name, shop, color } = action.payload;
+      const { id, dateCreated, name, shop, color } = action.payload;
       const newList = {
         id,
-        lastEditedTime,
         name,
         shop,
         color,
         products: {},
         isActive: true,
+        dateCreated,
       };
+      console.log({ dateCreated });
+
+      console.log(typeof dateCreated);
       const listsCopy = deepClone(lists);
       listsCopy[newList.id] = newList;
 
@@ -32,7 +35,7 @@ export default (state = initialState, action) => {
     }
     case listActions.EDIT: {
       const { id, name, shop, color } = action.payload;
-      listsCopy[id] = { ...lists[id], name, shop, color, lastEditedTime: new Date() };
+      listsCopy[id] = { ...lists[id], name, shop, color };
 
       return {
         ...state,
@@ -68,7 +71,7 @@ export default (state = initialState, action) => {
 
     case listActions.ADD_PRODUCT: {
       const { name, amount, unit } = action.payload;
-      const newProduct = { id: uuid(), name, lastEditedTime: new Date(), amount, unit, checked: false };
+      const newProduct = { id: uuid(), name, amount, unit, checked: false };
       listsCopy[currentOpenListId].products[newProduct.id] = newProduct;
 
       return {

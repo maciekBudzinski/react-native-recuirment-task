@@ -37,7 +37,7 @@ const Subtitle = styled(Text)`
 
 const Date = styled(Text)``;
 
-const ShoppingListItem = ({ id, name, shop, color, dateCreated, onEditButtonPress, onDeleteButtonPress, onPress }) => (
+const ListItem = ({ id, name, shop, color, dateCreated, onEditButtonPress, onDeleteButtonPress, onPress }) => (
   <SwipeWrapper
     leftOpenValue={OPEN_VALUE}
     rightOpenValue={-OPEN_VALUE}
@@ -65,7 +65,7 @@ const ShoppingListItem = ({ id, name, shop, color, dateCreated, onEditButtonPres
   />
 );
 
-ShoppingListItem.propTypes = {
+ListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   shop: PropTypes.string.isRequired,
@@ -76,4 +76,4 @@ ShoppingListItem.propTypes = {
   onPress: PropTypes.func.isRequired,
 };
 
-export default ShoppingListItem;
+export default ListItem;

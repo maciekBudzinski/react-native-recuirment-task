@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
-import ProductItem from './ListItem';
+import ListItem from './ListItem';
 
-const ProductList = ({ listRef, data, ...restProps }) => (
-  <FlatList
-    ref={listRef}
-    data={Object.values(data)}
-    renderItem={({ item }) => <ProductItem {...item} {...restProps} />}
-    keyExtractor={({ id }) => id}
-  />
+const List = ({ listRef, data, ...restProps }) => (
+  <FlatList ref={listRef} data={Object.values(data)} renderItem={({ item }) => <ListItem {...item} {...restProps} />} keyExtractor={({ id }) => id} />
 );
 
-ProductList.propTypes = {
+List.propTypes = {
   listRef: PropTypes.instanceOf(Object).isRequired,
   data: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default ProductList;
+export default List;

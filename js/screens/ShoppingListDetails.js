@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,18 +15,25 @@ import { openListSelector } from '../modules/shoppingList/selectors';
 import { productsInOpenListSelector } from '../modules/products/selectors';
 
 class ShoppingListsScreen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      formInputs: {
-        name: '',
-        amount: '',
-        unit: '',
-      },
-    };
+  state = {
+    formInputs: {
+      name: '',
+      amount: '',
+      unit: '',
+    },
+  };
 
-    this.productsListRef = React.createRef();
-  }
+  productsListRef = React.createRef();
+
+  inputRefs = {
+    name: React.createRef(),
+    amount: React.createRef(),
+    unit: React.createRef(),
+  };
+
+  focusFiled = refName => {
+    this.inputRefs[refName].current._root.focus();
+  };
 
   clearInputs = () => {
     this.setState({
@@ -53,12 +61,15 @@ class ShoppingListsScreen extends Component {
     } = this.state;
 
     addProduct(list.id, name, amount, unit);
+
     this.clearInputs();
+    this.focusFiled('name');
     setTimeout(() => this.productsListRef.current.scrollToEnd({ animated: true }), 100);
   };
 
   onCancelButtonPress = () => {
     this.clearInputs();
+    Keyboard.dismiss();
   };
 
   onDeleteButtonPress = id => {
@@ -106,7 +117,9 @@ class ShoppingListsScreen extends Component {
         <List listRef={this.productsListRef} data={products} onDeletePress={this.onDeleteButtonPress} onProductToggle={this.onProductToggle} />
         {isActive ? (
           <Form
+            inputRefs={this.inputRefs}
             formInputs={formInputs}
+            focusFiled={this.focusFiled}
             clearInputs={this.clearInputs}
             onTextInputChange={this.onTextInputChange}
             onSavePress={this.onSaveButtonPress}

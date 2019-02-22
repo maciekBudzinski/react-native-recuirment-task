@@ -30,7 +30,7 @@ const AddButton = styled(Button)`
   flex: 1;
 `;
 
-const ListForm = ({
+const Form = ({
   isVisible,
   isEditing,
   color,
@@ -83,7 +83,7 @@ const ListForm = ({
   </Modal>
 );
 
-ListForm.propTypes = {
+Form.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
@@ -101,4 +101,4 @@ ListForm.propTypes = {
   onColorChange: PropTypes.func.isRequired,
 };
 
-export default ListForm;
+export default Form;

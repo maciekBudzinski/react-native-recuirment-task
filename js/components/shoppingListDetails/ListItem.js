@@ -24,7 +24,7 @@ const DeleteButtonContainer = styled(Right)`
   padding-right: 0;
 `;
 
-const ProductItem = ({ id, name, amount, unit, checked, onProductToggle, onDeletePress }) => (
+const ListItem = ({ id, name, amount, unit, checked, onProductToggle, onDeletePress }) => (
   <Wrapper icon checked={checked}>
     <Left>
       <CheckBox onPress={() => onProductToggle(id)} checked={checked} color={COLORS.PRIMARY} />
@@ -43,7 +43,7 @@ const ProductItem = ({ id, name, amount, unit, checked, onProductToggle, onDelet
   </Wrapper>
 );
 
-ProductItem.propTypes = {
+ListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -53,4 +53,4 @@ ProductItem.propTypes = {
   onDeletePress: PropTypes.func.isRequired,
 };
 
-export default ProductItem;
+export default ListItem;

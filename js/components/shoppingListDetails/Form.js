@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Keyboard } from 'react-native';
 import { Button, Icon, View, Card } from 'native-base';
 import styled from 'styled-components/native';
 import Input from '../common/Input';
 import FormTitle from '../common/FormTitle';
 
-const Form = styled(Card)`
+const Wrapper = styled(Card)`
   background: ${({ theme }) => theme.colors.LIGHT_GRAY};
   padding: ${({ theme }) => theme.padding.medium};
 `;
@@ -35,87 +34,67 @@ const StyledButton = styled(Button)`
   width: 60px;
 `;
 
-class ProductForm extends Component {
-  inputRefs = {
-    name: React.createRef(),
-    amount: React.createRef(),
-    unit: React.createRef(),
-  };
+const Form = ({ inputRefs, formInputs, focusFiled, onTextInputChange, onSavePress, onCancelPress }) => {
+  const isNameEmpty = formInputs.name === '';
+  return (
+    <Wrapper>
+      <FormTitle title="Add new item:" iconName="checkbox" />
+      <InputsRow>
+        <NameInput
+          label="name"
+          inputRef={inputRefs.name}
+          value={formInputs.name}
+          returnKeyType="next"
+          onSubmitEditing={() => focusFiled('amount')}
+          onTextInputChange={text => onTextInputChange('name', text)}
+        />
+      </InputsRow>
+      <InputsRow>
+        <BaseInput
+          label="amount"
+          inputRef={inputRefs.amount}
+          value={formInputs.amount}
+          keyboardType="numeric"
+          returnKeyType="next"
+          onSubmitEditing={() => focusFiled('unit')}
+          onTextInputChange={text => onTextInputChange('amount', text)}
+        />
+        <BaseInput
+          label="unit"
+          inputRef={inputRefs.unit}
+          value={formInputs.unit}
+          returnKeyType="done"
+          onSubmitEditing={isNameEmpty ? () => focusFiled('name') : onSavePress}
+          onTextInputChange={text => onTextInputChange('unit', text)}
+        />
+        <ButtonGroup>
+          <StyledButton transparent onPress={onCancelPress}>
+            <Icon name="undo" />
+          </StyledButton>
+          <StyledButton disabled={isNameEmpty} onPress={onSavePress}>
+            <Icon name="add" />
+          </StyledButton>
+        </ButtonGroup>
+      </InputsRow>
+    </Wrapper>
+  );
+};
 
-  focusFiled = refName => {
-    this.inputRefs[refName].current._root.focus();
-  };
-
-  saveTask = () => {
-    const { onSavePress } = this.props;
-
-    onSavePress();
-    this.focusFiled('name');
-  };
-
-  cancelAdding = () => {
-    const { onCancelPress } = this.props;
-    onCancelPress();
-    Keyboard.dismiss();
-  };
-
-  render() {
-    const { formInputs, onTextInputChange } = this.props;
-    const isNameEmpty = formInputs.name === '';
-    return (
-      <Form>
-        <FormTitle title="Add new item:" iconName="checkbox" />
-        <InputsRow>
-          <NameInput
-            label="name"
-            inputRef={this.inputRefs.name}
-            value={formInputs.name}
-            returnKeyType="next"
-            onSubmitEditing={() => this.focusFiled('amount')}
-            onTextInputChange={text => onTextInputChange('name', text)}
-          />
-        </InputsRow>
-        <InputsRow>
-          <BaseInput
-            label="amount"
-            inputRef={this.inputRefs.amount}
-            value={formInputs.amount}
-            keyboardType="numeric"
-            returnKeyType="next"
-            onSubmitEditing={() => this.focusFiled('unit')}
-            onTextInputChange={text => onTextInputChange('amount', text)}
-          />
-          <BaseInput
-            label="unit"
-            inputRef={this.inputRefs.unit}
-            value={formInputs.unit}
-            returnKeyType="done"
-            onSubmitEditing={isNameEmpty ? () => this.focusFiled('name') : this.saveTask}
-            onTextInputChange={text => onTextInputChange('unit', text)}
-          />
-          <ButtonGroup>
-            <StyledButton transparent onPress={this.cancelAdding}>
-              <Icon name="undo" />
-            </StyledButton>
-            <StyledButton disabled={isNameEmpty} onPress={this.saveTask}>
-              <Icon name="add" />
-            </StyledButton>
-          </ButtonGroup>
-        </InputsRow>
-      </Form>
-    );
-  }
-}
-
-ProductForm.propTypes = {
+Form.propTypes = {
+  inputRefs: PropTypes.shape({
+    name: PropTypes.instanceOf(Object).isRequired,
+    amount: PropTypes.instanceOf(Object).isRequired,
+    unit: PropTypes.instanceOf(Object).isRequired,
+  }).isRequired,
   formInputs: PropTypes.shape({
     name: PropTypes.string.isRequired,
     amount: PropTypes.string.isRequired,
     unit: PropTypes.string.isRequired,
   }).isRequired,
+  focusFiled: PropTypes.func.isRequired,
   onTextInputChange: PropTypes.func.isRequired,
   onSavePress: PropTypes.func.isRequired,
   onCancelPress: PropTypes.func.isRequired,
 };
 
-export default ProductForm;
+export default Form;

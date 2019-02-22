@@ -20,10 +20,6 @@ const Name = styled(Text)`
   flex: 1;
 `;
 
-const Amount = styled(Text)``;
-
-const DeleteButton = styled(Button)``;
-
 const DeleteButtonContainer = styled(Right)`
   padding-right: 0;
 `;
@@ -35,14 +31,14 @@ const ProductItem = ({ id, name, amount, unit, checked, onProductToggle, onDelet
     </Left>
     <Info>
       <Name>{name}</Name>
-      <Amount>
+      <Text>
         {amount} {unit}
-      </Amount>
+      </Text>
     </Info>
     <DeleteButtonContainer>
-      <DeleteButton onPress={() => onDeletePress(id)} transparent>
+      <Button onPress={() => onDeletePress(id)} transparent>
         <Icon name="trash" />
-      </DeleteButton>
+      </Button>
     </DeleteButtonContainer>
   </Wrapper>
 );

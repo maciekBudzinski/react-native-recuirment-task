@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ActionButton from '../components/shoppingList/AddButton';
+import ActionButton from '../components/shoppingList/ActionButton';
 import Form from '../components/shoppingList/Form';
 import { addList, editList, openList, deleteList, changeSortOrder } from '../modules/shoppingList/actions';
 import ShoppingLists from '../components/shoppingList/List';

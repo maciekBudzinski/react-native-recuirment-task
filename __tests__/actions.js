@@ -1,13 +1,18 @@
 import * as actions from '../js/modules/shoppingList/actions';
 import * as types from '../js/modules/shoppingList/actionTypes';
 
+const constantDate = new Date('2019-02-21T14:41:20');
+
+jest.mock('uuid/v4', () => jest.fn(() => 'mocked-uuid'));
+global.Date = jest.fn(() => constantDate);
+
 describe('actions', () => {
-  const id = '123';
+  const id = 'mocked-uuid';
   const name = 'List 1';
   const shop = '7 eleven';
   const color = '#f00';
 
-  const prId = '456';
+  const prId = 'mocked-uuid';
   const prName = 'bread';
   const amount = 3;
   const unit = 'l.';
@@ -16,6 +21,8 @@ describe('actions', () => {
     const expectedAction = {
       type: types.ADD,
       payload: {
+        id,
+        lstEditedTime: new Date(),
         name,
         shop,
         color,
@@ -68,6 +75,7 @@ describe('actions', () => {
     const expectedAction = {
       type: types.ADD_PRODUCT,
       payload: {
+        id,
         name: prName,
         amount,
         unit,

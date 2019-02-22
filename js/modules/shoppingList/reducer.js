@@ -1,3 +1,4 @@
+import uuid from 'uuid/v4';
 import * as listActions from './actionTypes';
 import { deepClone } from '../../config/helpers';
 
@@ -11,10 +12,10 @@ export default (state = initialState, action) => {
   const listsCopy = deepClone(lists);
   switch (action.type) {
     case listActions.ADD: {
-      const { name, shop, color } = action.payload;
+      const { id, lastEditedTime, name, shop, color } = action.payload;
       const newList = {
-        id: Date.now().toString(),
-        lastEditedTime: new Date(),
+        id,
+        lastEditedTime,
         name,
         shop,
         color,
@@ -22,7 +23,7 @@ export default (state = initialState, action) => {
         isActive: true,
       };
       const listsCopy = deepClone(lists);
-      listsCopy[Date.now().toString()] = newList;
+      listsCopy[newList.id] = newList;
 
       return {
         ...state,
@@ -67,8 +68,8 @@ export default (state = initialState, action) => {
 
     case listActions.ADD_PRODUCT: {
       const { name, amount, unit } = action.payload;
-      const newProduct = { id: Date.now().toString(), name, lastEditedTime: new Date(), amount, unit, checked: false };
-      listsCopy[currentOpenListId].products[Date.now().toString()] = newProduct;
+      const newProduct = { id: uuid(), name, lastEditedTime: new Date(), amount, unit, checked: false };
+      listsCopy[currentOpenListId].products[newProduct.id] = newProduct;
 
       return {
         ...state,

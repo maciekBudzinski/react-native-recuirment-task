@@ -1,8 +1,11 @@
+import uuid from 'uuid/v4';
 import * as listActions from './actionTypes';
 
 export const addList = (name, shop, color) => ({
   type: listActions.ADD,
   payload: {
+    id: uuid(),
+    lstEditedTime: new Date(),
     name,
     shop,
     color,
@@ -35,7 +38,7 @@ export const openList = id => ({
 
 export const addProduct = (name, amount, unit) => ({
   type: listActions.ADD_PRODUCT,
-  payload: { name, amount, unit },
+  payload: { id: uuid(), name, amount, unit },
 });
 
 export const editProduct = (listId, id, name, amount, unit) => ({

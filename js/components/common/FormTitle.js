@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, View, H3 } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const Wrapper = styled(View)`
   flex-direction: row;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Fab, Icon } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const StyledFab = styled(Fab)`
   background-color: ${({ theme }) => theme.colors.PRIMARY};

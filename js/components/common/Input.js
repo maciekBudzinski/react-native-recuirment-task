@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Item, Label, Input as NBInput } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const StyledInput = styled(NBInput)`
   width: 100%;

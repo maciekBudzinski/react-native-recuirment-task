@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Text, Button, Icon, SwipeRow, View, H3, Card } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import moment from 'moment';
 import { DEVICE_WIDTH } from '../../config/constans';
 

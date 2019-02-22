@@ -3,7 +3,7 @@ import React from 'react';
 import ShoppingListsScreen from '../screens/ShoppingLists';
 import ArchivedListsScreen from '../screens/ArchivedLists';
 import ShoppingListDetailsScreen from '../screens/ShoppingListDetails';
-import { NavigationIcon } from '../components/common/NavigationIcon';
+import NavigationIcon from '../components/common/NavigationIcon';
 
 const StackNavigator = createStackNavigator(
   {

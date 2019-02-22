@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Keyboard } from 'react-native';
 import { View, Text, Button, Icon } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import ColorPalette from 'react-native-color-palette';
 import FormTitle from '../common/FormTitle';
 import Input from '../common/Input';

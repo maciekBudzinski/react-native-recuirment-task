@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Card, H3 } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const TextWrapper = styled(Card)`
   flex-direction: row;

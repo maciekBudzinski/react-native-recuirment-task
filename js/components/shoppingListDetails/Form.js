@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Keyboard } from 'react-native';
 import { Button, Icon, View, Card } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Input from '../common/Input';
 import FormTitle from '../common/FormTitle';
 

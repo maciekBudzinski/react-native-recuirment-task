@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem as NBListItem, Text, Button, Icon, Right, CheckBox, Body, Left } from 'native-base';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { COLORS } from '../../style/colors';
 
 const Wrapper = styled(NBListItem)`

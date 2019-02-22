@@ -1,6 +1,4 @@
-import uuid from 'uuid/v4';
 import * as listActions from './actionTypes';
-import { deepClone } from '../../config/helpers';
 
 const initialState = {
   lists: {},
@@ -10,7 +8,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const { lists, currentOpenListId } = state;
-  const listsCopy = deepClone(lists);
   switch (action.type) {
     case listActions.ADD: {
       const { id, dateCreated, name, shop, color } = action.payload;
@@ -23,35 +20,38 @@ export default (state = initialState, action) => {
         isActive: true,
         dateCreated,
       };
-      const listsCopy = deepClone(lists);
-      listsCopy[newList.id] = newList;
-
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          ...lists,
+          [id]: newList,
+        },
       };
     }
     case listActions.EDIT: {
       const { id, name, shop, color } = action.payload;
-      listsCopy[id] = { ...lists[id], name, shop, color };
-
+      const editedList = { ...lists[id], name, shop, color };
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          ...lists,
+          [id]: editedList,
+        },
       };
     }
     case listActions.DELETE: {
       const { id } = action.payload;
-      delete listsCopy[id];
+      const { [id]: omit, ...rest } = lists;
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          ...rest,
+        },
       };
     }
 
     case listActions.OPEN: {
       const { id } = action.payload;
-
       return {
         ...state,
         currentOpenListId: id,
@@ -59,42 +59,67 @@ export default (state = initialState, action) => {
     }
 
     case listActions.TOGGLE_ACTIVE: {
-      listsCopy[currentOpenListId] = { ...lists[currentOpenListId], isActive: !lists[currentOpenListId].isActive };
-
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          ...lists,
+          [currentOpenListId]: {
+            ...lists[currentOpenListId],
+            isActive: !lists[currentOpenListId].isActive,
+          },
+        },
       };
     }
 
     case listActions.ADD_PRODUCT: {
-      const { name, amount, unit } = action.payload;
-      const newProduct = { id: uuid(), name, amount, unit, checked: false };
-      listsCopy[currentOpenListId].products[newProduct.id] = newProduct;
-
+      const { id, name, amount, unit } = action.payload;
+      const newProduct = { id, name, amount, unit, checked: false };
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          ...lists,
+          [currentOpenListId]: {
+            ...lists[currentOpenListId],
+            products: {
+              ...lists[currentOpenListId].products,
+              [id]: newProduct,
+            },
+          },
+        },
       };
     }
 
     case listActions.DELETE_PRODUCT: {
       const { id } = action.payload;
-      delete listsCopy[currentOpenListId].products[id];
-
+      const { [id]: omit, ...rest } = lists[currentOpenListId].products;
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          ...lists,
+          [currentOpenListId]: {
+            ...lists[currentOpenListId],
+            products: rest,
+          },
+        },
       };
     }
 
     case listActions.TOGGLE_PRODUCT: {
       const { id } = action.payload;
-      listsCopy[currentOpenListId].products[id].checked = !lists[currentOpenListId].products[id].checked;
-
       return {
         ...state,
-        lists: listsCopy,
+        lists: {
+          [currentOpenListId]: {
+            ...lists[currentOpenListId],
+            products: {
+              ...lists[currentOpenListId].products,
+              [id]: {
+                ...lists[currentOpenListId].products[id],
+                checked: !lists[currentOpenListId].products[id].checked,
+              },
+            },
+          },
+        },
       };
     }
 

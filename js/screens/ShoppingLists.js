@@ -1,5 +1,5 @@
 import React from 'react';
-import List from '../containers/List';
+import List from './List';
 
 const ShoppingList = props => <List isActive listTitle="Shopping lists" {...props} />;
 

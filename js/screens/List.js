@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ActionButton from '../components/shoppingList/AddButton';
 import Form from '../components/shoppingList/Form';
-import { addList, editList, openList, deleteList, addProduct } from '../modules/shoppingList/actions';
-import ShoppingListsList from '../components/shoppingList/List';
+import { addList, editList, openList, deleteList, addProduct, changeSortOrder } from '../modules/shoppingList/actions';
+import ShoppingLists from '../components/shoppingList/List';
 import Header from '../components/shoppingList/Header';
 import { LIST_COLORS } from '../style/colors';
+import { listsByStatusSelector } from '../modules/shoppingList/selectors';
 
 class List extends Component {
   state = {
@@ -113,6 +114,11 @@ class List extends Component {
     ]);
   };
 
+  onFilterButtonPress = () => {
+    const { changeSortOrder } = this.props;
+    changeSortOrder();
+  };
+
   onColorChange = color => {
     this.setState({
       color,
@@ -120,13 +126,14 @@ class List extends Component {
   };
 
   render() {
-    const { isActive, lists } = this.props;
-    const { isListFormVisible, isListEditing, color, formInputs } = this.state;
+    const { isActive, isSortByNewest, lists } = this.props;
+    const { isListFormVisible, isListEditing, isSortedByNewest, color, formInputs } = this.state;
     return (
       <Container>
-        <Header isActive={isActive} />
-        <ShoppingListsList
+        <Header isActive={isActive} isSortByNewest={isSortByNewest} onFilterButtonPress={this.onFilterButtonPress} />
+        <ShoppingLists
           data={lists}
+          isSortedByNewest={isSortedByNewest}
           onEditButtonPress={this.onEditListButtonPress}
           onDeleteButtonPress={this.onDeleteListButtonPress}
           onPress={this.onListPress}
@@ -151,20 +158,23 @@ class List extends Component {
 
 List.propTypes = {
   isActive: PropTypes.bool.isRequired,
+  isSortByNewest: PropTypes.bool.isRequired,
+  lists: PropTypes.instanceOf(Object).isRequired,
+  navigation: PropTypes.instanceOf(Object).isRequired,
   addList: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
   openList: PropTypes.func.isRequired,
   addProduct: PropTypes.func.isRequired,
-  lists: PropTypes.instanceOf(Object).isRequired,
-  navigation: PropTypes.instanceOf(Object).isRequired,
+  changeSortOrder: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  lists: Object.values(state.shoppingList.lists).filter(({ isActive }) => isActive === ownProps.isActive),
+  lists: listsByStatusSelector(state, ownProps),
+  isSortByNewest: state.shoppingList.isSortByNewest,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, openList, deleteList, addProduct }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, openList, deleteList, addProduct, changeSortOrder }, dispatch);
 
 export default connect(
   mapStateToProps,

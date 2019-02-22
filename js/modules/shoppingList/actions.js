@@ -55,3 +55,7 @@ export const toggleProduct = id => ({
   type: listActions.TOGGLE_PRODUCT,
   payload: { id },
 });
+
+export const changeSortOrder = () => ({
+  type: listActions.CHANGE_SORT_ORDER,
+});

@@ -5,6 +5,7 @@ import { deepClone } from '../../config/helpers';
 const initialState = {
   lists: {},
   currentOpenListId: null,
+  isSortByNewest: true,
 };
 
 export default (state = initialState, action) => {
@@ -22,9 +23,6 @@ export default (state = initialState, action) => {
         isActive: true,
         dateCreated,
       };
-      console.log({ dateCreated });
-
-      console.log(typeof dateCreated);
       const listsCopy = deepClone(lists);
       listsCopy[newList.id] = newList;
 
@@ -97,6 +95,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         lists: listsCopy,
+      };
+    }
+
+    case listActions.CHANGE_SORT_ORDER: {
+      return {
+        ...state,
+        isSortByNewest: !state.isSortByNewest,
       };
     }
 

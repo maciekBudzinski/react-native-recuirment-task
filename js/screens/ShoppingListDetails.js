@@ -9,6 +9,7 @@ import Form from '../components/shoppingListDetails/Form';
 import Header from '../components/shoppingListDetails/Header';
 import ArchiveListInfo from '../components/shoppingListDetails/ArchiveListInfo';
 import { showToast } from '../services/Toasts';
+import { openListSelector } from '../modules/shoppingList/selectors';
 
 class ShoppingListsScreen extends Component {
   constructor() {
@@ -59,8 +60,8 @@ class ShoppingListsScreen extends Component {
   };
 
   onDeleteButtonPress = id => {
-    const { deleteProduct, lists, currentOpenListId } = this.props;
-    if (lists[currentOpenListId].isActive) {
+    const { deleteProduct, list } = this.props;
+    if (list.isActive) {
       deleteProduct(id);
     } else {
       showToast('List is archived!', 'warning');
@@ -68,8 +69,8 @@ class ShoppingListsScreen extends Component {
   };
 
   onProductToggle = id => {
-    const { toggleProduct, lists, currentOpenListId } = this.props;
-    if (lists[currentOpenListId].isActive) {
+    const { toggleProduct, list } = this.props;
+    if (list.isActive) {
       toggleProduct(id);
     } else {
       showToast('List is archived!', 'warning');
@@ -87,9 +88,9 @@ class ShoppingListsScreen extends Component {
   };
 
   render() {
-    const { currentOpenListId, lists } = this.props;
+    const { list } = this.props;
     const { formInputs } = this.state;
-    const { id, isActive, name, shop, products } = lists[currentOpenListId];
+    const { id, isActive, name, shop, products } = list;
     return (
       <Container>
         <Header
@@ -118,18 +119,16 @@ class ShoppingListsScreen extends Component {
 }
 
 ShoppingListsScreen.propTypes = {
-  currentOpenListId: PropTypes.string.isRequired,
   addProduct: PropTypes.func.isRequired,
   toggleProduct: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
   toggleListActive: PropTypes.func.isRequired,
-  lists: PropTypes.instanceOf(Object).isRequired,
+  list: PropTypes.instanceOf(Object).isRequired,
   navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = state => ({
-  lists: state.shoppingList.lists,
-  currentOpenListId: state.shoppingList.currentOpenListId,
+  list: openListSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addProduct, deleteProduct, toggleProduct, toggleListActive }, dispatch);

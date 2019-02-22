@@ -5,12 +5,12 @@ import ListItem from './ListItem';
 
 // const renderItem = ({ item }) => <ShoppingListItem {...item} />;
 
-const ShoppingListsList = ({ data, ...restProps }) => (
+const List = ({ data, ...restProps }) => (
   <FlatList data={data} renderItem={({ item }) => <ListItem {...item} {...restProps} />} keyExtractor={({ id }) => id} />
 );
 
-ShoppingListsList.propTypes = {
+List.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default ShoppingListsList;
+export default List;

@@ -3,13 +3,15 @@ import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { addProduct, deleteProduct, toggleListActive, toggleProduct } from '../modules/shoppingList/actions';
+import { toggleListActive } from '../modules/shoppingList/actions';
+import { addProduct, toggleProduct, deleteProduct } from '../modules/products/actions';
 import List from '../components/shoppingListDetails/List';
 import Form from '../components/shoppingListDetails/Form';
 import Header from '../components/shoppingListDetails/Header';
 import ArchiveListInfo from '../components/shoppingListDetails/ArchiveListInfo';
 import { showToast } from '../services/Toasts';
 import { openListSelector } from '../modules/shoppingList/selectors';
+import { productsInOpenListSelector } from '../modules/products/selectors';
 
 class ShoppingListsScreen extends Component {
   constructor() {
@@ -45,12 +47,12 @@ class ShoppingListsScreen extends Component {
   };
 
   onSaveButtonPress = () => {
-    const { addProduct } = this.props;
+    const { addProduct, list } = this.props;
     const {
       formInputs: { name, amount, unit },
     } = this.state;
 
-    addProduct(name, amount, unit);
+    addProduct(list.id, name, amount, unit);
     this.clearInputs();
     setTimeout(() => this.productsListRef.current.scrollToEnd({ animated: true }), 100);
   };
@@ -88,9 +90,9 @@ class ShoppingListsScreen extends Component {
   };
 
   render() {
-    const { list } = this.props;
+    const { list, products } = this.props;
     const { formInputs } = this.state;
-    const { id, isActive, name, shop, products } = list;
+    const { id, isActive, name, shop } = list;
     return (
       <Container>
         <Header
@@ -129,6 +131,7 @@ ShoppingListsScreen.propTypes = {
 
 const mapStateToProps = state => ({
   list: openListSelector(state),
+  products: productsInOpenListSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addProduct, deleteProduct, toggleProduct, toggleListActive }, dispatch);

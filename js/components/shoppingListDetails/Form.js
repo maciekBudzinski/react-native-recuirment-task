@@ -8,7 +8,7 @@ import FormTitle from '../common/FormTitle';
 
 const Form = styled(Card)`
   background: ${({ theme }) => theme.colors.LIGHT_GRAY};
-  padding: 6px;
+  padding: ${({ theme }) => theme.padding.medium};
 `;
 
 const InputsRow = styled(View)`
@@ -17,11 +17,11 @@ const InputsRow = styled(View)`
 
 const BaseInput = styled(Input)`
   flex: 1;
-  margin-right: 12px;
+  margin-right: ${({ theme }) => theme.margin.large};
 `;
 
 const NameInput = styled(BaseInput)`
-  margin-bottom: 6px;
+  margin-bottom: ${({ theme }) => theme.margin.medium};
 `;
 
 const ButtonGroup = styled(View)`

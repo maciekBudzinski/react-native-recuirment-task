@@ -6,13 +6,13 @@ const TextWrapper = styled(Card)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 6px;
+  padding: ${({ theme }) => theme.padding.medium};
   background: ${({ theme }) => theme.colors.LIGHT_GRAY};
 `;
 
 const StyledIcon = styled(Icon)`
   font-size: 26px;
-  padding-left: 6px;
+  padding-left: ${({ theme }) => theme.padding.medium};
 `;
 
 const ArchiveListInfo = () => (

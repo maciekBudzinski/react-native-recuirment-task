@@ -10,7 +10,7 @@ const Wrapper = styled(View)`
 
 const TitleIcon = styled(Icon)`
   font-size: 22;
-  padding-right: 6px;
+  padding-right: ${({ theme }) => theme.padding.medium};
 `;
 
 const FormTitle = ({ iconName, title }) => (

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const FilterIcon = styled(Icon)`
-  padding-left: 6px;
+  padding-left: ${({ theme }) => theme.padding.medium};
 `;
 
 const Header = ({ isActive, isSortByNewest, onFilterButtonPress }) => (

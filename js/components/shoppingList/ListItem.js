@@ -13,15 +13,15 @@ const Wrapper = styled(Card)`
   justify-content: space-between;
   align-items: center;
   width: ${DEVICE_WIDTH};
-  padding: 12px;
-  margin: 0px;
-  border-left-width: 6px;
+  padding: ${({ theme }) => theme.padding.large};
+  margin: 0;
+  border-left-width: 6;
   border-color: ${({ borderColor }) => borderColor};
 `;
 
 const SwipeWrapper = styled(SwipeRow)`
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 `;
 
 const Details = styled(View)`

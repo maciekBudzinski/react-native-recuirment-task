@@ -18,11 +18,11 @@ const Wrapper = styled(View)`
   background: ${({ theme }) => theme.colors.WHITE};
   align-self: center;
   width: 80%;
-  padding: 12px;
+  padding: ${({ theme }) => theme.padding.large};
 `;
 
 const ButtonGroup = styled(View)`
-  margin-top: 40px;
+  margin-top: 40;
   flex-direction: row;
 `;
 

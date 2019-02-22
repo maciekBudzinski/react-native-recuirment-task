@@ -51,6 +51,7 @@ class List extends Component {
   onRequestListFormModalClose = () => {
     this.setState({
       isListFormVisible: false,
+      isListEditing: false,
     });
   };
 
@@ -73,6 +74,7 @@ class List extends Component {
 
     if (isListEditing) {
       editList(editingListId, name, shop, color);
+      this.setState({ isListEditing: false });
     } else {
       addList(name, shop, color);
     }

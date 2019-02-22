@@ -3,7 +3,7 @@ import * as types from './actionTypes';
 
 export const addProduct = (listId, name, amount, unit) => ({
   type: types.ADD,
-  payload: { listId, id: uuid(), name, amount, unit },
+  payload: { listId, id: uuid(), name, amount, unit, dateCreated: Date.now() },
 });
 
 export const deleteProduct = id => ({

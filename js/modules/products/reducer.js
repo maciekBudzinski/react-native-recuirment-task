@@ -10,8 +10,8 @@ export default (state = initialState, action) => {
   const { products } = state;
   switch (action.type) {
     case types.ADD: {
-      const { listId, id, name, amount, unit } = action.payload;
-      const newProduct = { listId, id, name, amount, unit, checked: false };
+      const { listId, id, name, amount, unit, dateCreated } = action.payload;
+      const newProduct = { listId, id, name, amount, unit, dateCreated, checked: false };
       return {
         ...state,
         products: {

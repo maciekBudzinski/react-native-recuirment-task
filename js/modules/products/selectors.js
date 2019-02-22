@@ -6,6 +6,9 @@ export const selectProducts = state => state.products.products;
 export const productsInOpenListSelector = createSelector(
   [selectProducts, selectCurrentOpenListId],
   (products, openlistId) => {
-    return Object.values(products).filter(({ listId }) => listId === openlistId);
+    const sortByDate = (itemA, itemB) => new Date(itemA.dateCreated).getTime() - new Date(itemB.dateCreated).getTime();
+    return Object.values(products)
+      .filter(({ listId }) => listId === openlistId)
+      .sort(sortByDate);
   }
 );

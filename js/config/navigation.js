@@ -1,5 +1,5 @@
-import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import React from 'react';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import ShoppingListsScreen from '../screens/ShoppingLists';
 import ArchivedListsScreen from '../screens/ArchivedLists';
 import ShoppingListDetailsScreen from '../screens/ShoppingListDetails';

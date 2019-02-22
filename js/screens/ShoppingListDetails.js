@@ -126,6 +126,7 @@ ShoppingListsScreen.propTypes = {
   deleteProduct: PropTypes.func.isRequired,
   toggleListActive: PropTypes.func.isRequired,
   list: PropTypes.instanceOf(Object).isRequired,
+  products: PropTypes.instanceOf(Array).isRequired,
   navigation: PropTypes.instanceOf(Object).isRequired,
 };
 

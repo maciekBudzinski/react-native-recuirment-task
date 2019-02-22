@@ -10,6 +10,7 @@ export const openListSelector = createSelector(
   [selectLists, selectCurrentOpenListId],
   (lists, index) => lists[index]
 );
+
 export const listsByStatusSelector = createSelector(
   [selectLists, selectIsSortByNewest, selectIsActiveProp],
   (lists, isSortByNewest, isListActive) => {

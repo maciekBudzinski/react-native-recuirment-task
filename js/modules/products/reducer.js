@@ -9,7 +9,7 @@ const initialState = {
 export default (state = initialState, action) => {
   const { products } = state;
   switch (action.type) {
-    case types.ADD_PRODUCT: {
+    case types.ADD: {
       const { listId, id, name, amount, unit } = action.payload;
       const newProduct = { listId, id, name, amount, unit, checked: false };
       return {
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case types.DELETE_PRODUCT: {
+    case types.DELETE: {
       const { id } = action.payload;
       const { [id]: omit, ...rest } = products;
       return {
@@ -38,15 +38,15 @@ export default (state = initialState, action) => {
         .filter(({ listId }) => listId === id)
         .map(({ id }) => id);
 
-      const newProducts = omit(products, [...productsToDeleteIds]);
+      const rest = omit(products, [...productsToDeleteIds]);
 
       return {
         ...state,
-        products: newProducts,
+        products: rest,
       };
     }
 
-    case types.TOGGLE_PRODUCT: {
+    case types.TOGGLE: {
       const { id } = action.payload;
       return {
         ...state,

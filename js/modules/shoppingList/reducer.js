@@ -1,4 +1,4 @@
-import * as listActions from './actionTypes';
+import * as types from './actionTypes';
 
 const initialState = {
   lists: {},
@@ -9,14 +9,13 @@ const initialState = {
 export default (state = initialState, action) => {
   const { lists, currentOpenListId } = state;
   switch (action.type) {
-    case listActions.ADD: {
+    case types.ADD: {
       const { id, dateCreated, name, shop, color } = action.payload;
       const newList = {
         id,
         name,
         shop,
         color,
-        products: {},
         isActive: true,
         dateCreated,
       };
@@ -28,7 +27,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case listActions.EDIT: {
+    case types.EDIT: {
       const { id, name, shop, color } = action.payload;
       const editedList = { ...lists[id], name, shop, color };
       return {
@@ -39,7 +38,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case listActions.DELETE: {
+    case types.DELETE: {
       const { id } = action.payload;
       const { [id]: omit, ...rest } = lists;
       return {
@@ -50,7 +49,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case listActions.OPEN: {
+    case types.OPEN: {
       const { id } = action.payload;
       return {
         ...state,
@@ -58,7 +57,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case listActions.TOGGLE_ACTIVE: {
+    case types.TOGGLE_ACTIVE: {
       return {
         ...state,
         lists: {
@@ -71,59 +70,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case listActions.ADD_PRODUCT: {
-      const { id, name, amount, unit } = action.payload;
-      const newProduct = { id, name, amount, unit, checked: false };
-      return {
-        ...state,
-        lists: {
-          ...lists,
-          [currentOpenListId]: {
-            ...lists[currentOpenListId],
-            products: {
-              ...lists[currentOpenListId].products,
-              [id]: newProduct,
-            },
-          },
-        },
-      };
-    }
-
-    case listActions.DELETE_PRODUCT: {
-      const { id } = action.payload;
-      const { [id]: omit, ...rest } = lists[currentOpenListId].products;
-      return {
-        ...state,
-        lists: {
-          ...lists,
-          [currentOpenListId]: {
-            ...lists[currentOpenListId],
-            products: rest,
-          },
-        },
-      };
-    }
-
-    case listActions.TOGGLE_PRODUCT: {
-      const { id } = action.payload;
-      return {
-        ...state,
-        lists: {
-          [currentOpenListId]: {
-            ...lists[currentOpenListId],
-            products: {
-              ...lists[currentOpenListId].products,
-              [id]: {
-                ...lists[currentOpenListId].products[id],
-                checked: !lists[currentOpenListId].products[id].checked,
-              },
-            },
-          },
-        },
-      };
-    }
-
-    case listActions.CHANGE_SORT_ORDER: {
+    case types.CHANGE_SORT_ORDER: {
       return {
         ...state,
         isSortByNewest: !state.isSortByNewest,

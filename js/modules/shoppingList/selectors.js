@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
-const selectLists = state => state.shoppingList.lists;
-const selectIsSortByNewest = state => state.shoppingList.isSortByNewest;
-const selectCurrentOpenListId = state => state.shoppingList.currentOpenListId;
+export const selectLists = state => state.shoppingList.lists;
+export const selectIsSortByNewest = state => state.shoppingList.isSortByNewest;
+export const selectCurrentOpenListId = state => state.shoppingList.currentOpenListId;
 
-const selectIsActiveProp = (state, ownProps) => ownProps.isActive;
+export const selectIsActiveProp = (state, ownProps) => ownProps.isActive;
 
 export const openListSelector = createSelector(
   [selectLists, selectCurrentOpenListId],

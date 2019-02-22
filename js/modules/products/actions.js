@@ -1,17 +1,17 @@
 import uuid from 'uuid/v4';
-import * as listActions from './actionTypes';
+import * as types from './actionTypes';
 
 export const addProduct = (listId, name, amount, unit) => ({
-  type: listActions.ADD_PRODUCT,
+  type: types.ADD,
   payload: { listId, id: uuid(), name, amount, unit },
 });
 
 export const deleteProduct = id => ({
-  type: listActions.DELETE_PRODUCT,
+  type: types.DELETE,
   payload: { id },
 });
 
 export const toggleProduct = id => ({
-  type: listActions.TOGGLE_PRODUCT,
+  type: types.TOGGLE,
   payload: { id },
 });

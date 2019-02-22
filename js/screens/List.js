@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ActionButton from '../components/shoppingList/AddButton';
 import Form from '../components/shoppingList/Form';
-import { addList, editList, openList, deleteList, addProduct, changeSortOrder } from '../modules/shoppingList/actions';
+import { addList, editList, openList, deleteList, changeSortOrder } from '../modules/shoppingList/actions';
 import ShoppingLists from '../components/shoppingList/List';
 import Header from '../components/shoppingList/Header';
 import { LIST_COLORS } from '../style/colors';
@@ -94,11 +94,6 @@ class List extends Component {
     });
   };
 
-  onAddProductPress = (listId, name, amount, unit) => {
-    const { addProduct } = this.props;
-    addProduct(listId, name, amount, unit);
-  };
-
   onListPress = id => {
     const { navigation, openList } = this.props;
     openList(id);
@@ -165,7 +160,6 @@ List.propTypes = {
   editList: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
   openList: PropTypes.func.isRequired,
-  addProduct: PropTypes.func.isRequired,
   changeSortOrder: PropTypes.func.isRequired,
 };
 
@@ -174,7 +168,7 @@ const mapStateToProps = (state, ownProps) => ({
   isSortByNewest: state.shoppingList.isSortByNewest,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, openList, deleteList, addProduct, changeSortOrder }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addList, editList, openList, deleteList, changeSortOrder }, dispatch);
 
 export default connect(
   mapStateToProps,
